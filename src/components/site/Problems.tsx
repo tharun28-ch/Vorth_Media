@@ -68,7 +68,21 @@ export function Problems() {
           You're not alone. These are the questions we hear every week — and exactly what we fix.
         </p>
 
-        <div className="relative mx-auto mt-16 h-[680px] max-w-6xl md:h-[560px]">
+        <div className="relative mx-auto mt-16 flex max-w-6xl flex-wrap items-center justify-center gap-3 md:block md:h-[560px]">
+          {/* Center hero blob for mobile */}
+          <div className="mb-6 flex w-full justify-center md:hidden">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6 }}
+              whileInView={{ opacity: 1, scale: 1.1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="z-10 w-[200px] bg-brand px-6 py-6 text-center font-bold text-white shadow-[0_0_60px_rgba(255,45,55,0.45)]"
+              style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
+            >
+              Why People Choose Us
+            </motion.div>
+          </div>
+
           {PROBLEMS.map((text, i) => (
             <motion.div
               key={text}
@@ -76,7 +90,9 @@ export function Problems() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: (i % 12) * 0.07 }}
-              className="absolute float-y w-[160px] cursor-pointer bg-surface-2/85 px-5 py-4 text-center text-sm italic text-white/90 transition hover:scale-105 hover:bg-surface-2 md:w-[180px] md:text-[15px]"
+              className={`static float-y w-auto max-w-[280px] cursor-pointer bg-surface-2/85 px-4 py-3 text-center text-sm italic text-white/90 transition hover:scale-105 hover:bg-surface-2 md:absolute md:w-[180px] md:px-5 md:py-4 md:text-[15px] ${
+                i >= 8 ? "hidden md:block" : ""
+              }`}
               style={{
                 left: `${POS[i].x}%`,
                 top: `${POS[i].y}%`,
@@ -89,13 +105,13 @@ export function Problems() {
             </motion.div>
           ))}
 
-          {/* Center hero blob */}
+          {/* Center hero blob for desktop */}
           <motion.div
             initial={{ opacity: 0, scale: 0.6 }}
             whileInView={{ opacity: 1, scale: 1.1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="absolute left-1/2 top-1/2 z-10 w-[200px] -translate-x-1/2 -translate-y-1/2 bg-brand px-6 py-6 text-center font-bold text-white shadow-[0_0_60px_rgba(255,45,55,0.45)]"
+            className="absolute left-1/2 top-1/2 z-10 hidden w-[200px] -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-brand px-6 py-6 text-center font-bold text-white shadow-[0_0_60px_rgba(255,45,55,0.45)] md:flex"
             style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
           >
             Why People Choose Us

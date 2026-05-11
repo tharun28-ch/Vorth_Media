@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Linkedin, Instagram } from "lucide-react";
+import { Linkedin, Instagram, ChevronLeft, ChevronRight } from "lucide-react";
 
 const TEAM = [
   { nickname: "The Architect", name: "Monish Aravind", role: "Founder & CEO", initials: "MA", image: "/team/member1.png", linkedin: "https://www.linkedin.com/", instagram: "https://www.instagram.com/", bio: "Monish leads brand strategy and growth roadmaps for every Vorth client. He blends storytelling with sharp business thinking to align brand and revenue from day one." },
@@ -11,6 +12,16 @@ const TEAM = [
 ];
 
 export function Team() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextPerson = () => {
+    setCurrentIndex((prev) => (prev + 1) % TEAM.length);
+  };
+
+  const prevPerson = () => {
+    setCurrentIndex((prev) => (prev - 1 + TEAM.length) % TEAM.length);
+  };
+
   return (
     <section className="bg-black py-28 text-white">
       <div className="container-x">
@@ -28,7 +39,90 @@ export function Team() {
           </p>
         </div>
 
-        <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Mobile Carousel View */}
+        <div className="mx-auto mt-12 block max-w-sm sm:hidden">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-black">
+            {TEAM.map((m, i) => (
+              <div
+                key={m.name}
+                className={`group absolute inset-0 transition-opacity duration-500 ${
+                  i === currentIndex ? "z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
+                }`}
+              >
+                <div className="absolute left-4 top-4 z-20 inline-flex items-center rounded-full border border-white/15 bg-black/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white/80 backdrop-blur-sm">
+                  {m.nickname}
+                </div>
+
+                <div className="absolute inset-0 flex items-center justify-center bg-neutral-900 text-7xl font-bold tracking-tighter text-white/20">
+                  {m.initials}
+                </div>
+                <img
+                  src={m.image}
+                  alt={m.name}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent p-5 pt-16 transition-opacity duration-300 group-hover:opacity-0">
+                  <div className="text-xl font-bold text-white">{m.name}</div>
+                  <div className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">{m.role}</div>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 z-10 flex translate-y-full flex-col justify-end bg-black p-6 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0">
+                  <div className="text-xl font-bold text-white">{m.name}</div>
+                  <div className="mb-3 text-[11px] uppercase tracking-[0.2em] text-white/60">{m.role}</div>
+                  <p className="text-sm leading-relaxed text-white/85">{m.bio}</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    {m.linkedin && (
+                      <a
+                        href={m.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${m.name} on LinkedIn`}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:scale-110"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                      </a>
+                    )}
+                    {m.instagram && (
+                      <a
+                        href={m.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${m.name} on Instagram`}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:scale-110"
+                      >
+                        <Instagram className="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <button
+              onClick={prevPerson}
+              aria-label="Previous team member"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-surface transition hover:bg-white hover:text-black"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <div className="text-sm font-medium text-white/60">
+              {currentIndex + 1} / {TEAM.length}
+            </div>
+            <button
+              onClick={nextPerson}
+              aria-label="Next team member"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-surface transition hover:bg-white hover:text-black"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop Grid View */}
+        <div className="mx-auto mt-16 hidden max-w-6xl grid-cols-1 gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-3">
           {TEAM.map((m, i) => (
             <motion.div
               key={m.name}
