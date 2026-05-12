@@ -17,7 +17,7 @@ const PROBLEMS = [
   "The Agency I Hired Just Didn't Understand My Brand!",
 ];
 
-// pre-defined scattered positions (% based)
+// Desktop scattered positions (% based)
 const POS = [
   { x: 6, y: 8 },
   { x: 78, y: 4 },
@@ -68,21 +68,36 @@ export function Problems() {
           You're not alone. These are the questions we hear every week — and exactly what we fix.
         </p>
 
-        <div className="relative mx-auto mt-16 flex max-w-6xl flex-wrap items-center justify-center gap-3 md:block md:h-[560px]">
-          {/* Center hero blob for mobile */}
-          <div className="mb-6 flex w-full justify-center md:hidden">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.6 }}
-              whileInView={{ opacity: 1, scale: 1.1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="z-10 w-[200px] bg-brand px-6 py-6 text-center font-bold text-white shadow-[0_0_60px_rgba(255,45,55,0.45)]"
-              style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
-            >
-              Why People Choose Us
-            </motion.div>
-          </div>
+        {/* ── Mobile: clean stacked list ── */}
+        <div className="mt-10 flex flex-col items-center gap-3 md:hidden">
+          {/* "Why People Choose Us" badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-2 w-[160px] bg-brand px-5 py-4 text-center text-sm font-bold text-white shadow-[0_0_40px_rgba(255,45,55,0.4)]"
+            style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
+          >
+            Why People Choose Us
+          </motion.div>
 
+          {PROBLEMS.map((text, i) => (
+            <motion.div
+              key={text}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.35, delay: i * 0.04 }}
+              className="w-full max-w-xs rounded-2xl border border-white/8 bg-surface-2/80 px-4 py-3 text-center text-sm italic text-white/85"
+            >
+              "{text}"
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ── Desktop: absolute blob layout ── */}
+        <div className="relative mx-auto mt-16 hidden max-w-6xl md:block md:h-[560px]">
           {PROBLEMS.map((text, i) => (
             <motion.div
               key={text}
@@ -90,9 +105,7 @@ export function Problems() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: (i % 12) * 0.07 }}
-              className={`static float-y w-auto max-w-[280px] cursor-pointer bg-surface-2/85 px-4 py-3 text-center text-sm italic text-white/90 transition hover:scale-105 hover:bg-surface-2 md:absolute md:w-[180px] md:px-5 md:py-4 md:text-[15px] ${
-                i >= 8 ? "hidden md:block" : ""
-              }`}
+              className="float-y absolute w-[180px] cursor-pointer bg-surface-2/85 px-5 py-4 text-center text-[15px] italic text-white/90 transition hover:scale-105 hover:bg-surface-2"
               style={{
                 left: `${POS[i].x}%`,
                 top: `${POS[i].y}%`,
@@ -105,13 +118,13 @@ export function Problems() {
             </motion.div>
           ))}
 
-          {/* Center hero blob for desktop */}
+          {/* Center hero blob */}
           <motion.div
             initial={{ opacity: 0, scale: 0.6 }}
             whileInView={{ opacity: 1, scale: 1.1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="absolute left-1/2 top-1/2 z-10 hidden w-[200px] -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-brand px-6 py-6 text-center font-bold text-white shadow-[0_0_60px_rgba(255,45,55,0.45)] md:flex"
+            className="absolute left-1/2 top-1/2 z-10 flex w-[200px] -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-brand px-6 py-6 text-center font-bold text-white shadow-[0_0_60px_rgba(255,45,55,0.45)]"
             style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
           >
             Why People Choose Us

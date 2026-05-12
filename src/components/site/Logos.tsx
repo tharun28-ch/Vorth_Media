@@ -7,12 +7,48 @@ const LOGOS = [
   { name: "Cosma Academy", image: "/logos/cosmaa.jpeg" },
 ];
 
+// Duplicate for seamless loop
+const MARQUEE_LOGOS = [...LOGOS, ...LOGOS];
+
 export function Logos() {
   return (
     <section className="border-y border-white/5 bg-black py-20">
       <div className="container-x">
-        <h2 className="text-center text-3xl font-bold md:text-4xl">Brands That Trust Us</h2>
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-12 md:gap-20">
+        <h2 className="text-center text-3xl font-bold md:text-4xl">
+          Brands That Trust Us
+        </h2>
+
+        {/* ── Mobile: auto-scrolling marquee (left → right) ── */}
+        <div className="mt-14 overflow-hidden sm:hidden">
+          <div className="logos-marquee flex gap-10">
+            {MARQUEE_LOGOS.map((brand, i) => (
+              <div
+                key={`${brand.name}-${i}`}
+                className="flex shrink-0 flex-col items-center gap-3"
+              >
+                <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-surface/60 transition-all duration-300">
+                  {brand.image ? (
+                    <img
+                      src={brand.image}
+                      alt={brand.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-3xl font-bold text-brand">
+                      {brand.name.charAt(0)}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] font-semibold tracking-widest text-white/60">
+                  {brand.name.toUpperCase()}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Desktop: static grid ── */}
+        <div className="mt-14 hidden flex-wrap items-center justify-center gap-12 sm:flex md:gap-20">
           {LOGOS.map((brand, i) => (
             <motion.div
               key={brand.name}
@@ -35,11 +71,25 @@ export function Logos() {
                   </span>
                 )}
               </div>
-              <span className="text-xs font-semibold tracking-widest text-white/60">{brand.name.toUpperCase()}</span>
+              <span className="text-xs font-semibold tracking-widest text-white/60">
+                {brand.name.toUpperCase()}
+              </span>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Marquee keyframe injected inline */}
+      <style>{`
+        @keyframes marquee-ltr {
+          0%   { transform: translateX(-50%); }
+          100% { transform: translateX(0%); }
+        }
+        .logos-marquee {
+          animation: marquee-ltr 12s linear infinite;
+          width: max-content;
+        }
+      `}</style>
     </section>
   );
 }
