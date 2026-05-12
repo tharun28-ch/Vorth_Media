@@ -47,8 +47,9 @@ function mobileBlobRingPosition(i: number, total: number) {
   const ringSize = isInner ? innerCount : total - innerCount;
   const step = 360 / ringSize;
   const angleDeg = -90 + step * slot + (isInner ? 0 : step / 2);
-  const rx = isInner ? 31 : 45;
-  const ry = isInner ? 26 : 39;
+  // Increased radii for better spacing between center and rings
+  const rx = isInner ? 33 : 47;
+  const ry = isInner ? 28 : 42;
   const rad = (angleDeg * Math.PI) / 180;
   return {
     left: `${50 + rx * Math.cos(rad)}%`,
@@ -103,8 +104,8 @@ export function Problems() {
                 <div
                   className={`float-y bg-surface-2/85 text-center italic leading-snug text-white/90 shadow-sm transition hover:scale-105 hover:bg-surface-2 active:scale-[1.03] ${
                     isInner
-                      ? "w-[104px] px-2.5 py-2 text-[10px] min-[400px]:w-[112px] min-[400px]:text-[11px]"
-                      : "w-[min(34vw,124px)] px-3 py-2.5 text-[11px] min-[400px]:w-[132px] min-[400px]:text-[12px]"
+                      ? "w-[92px] px-2.5 py-2 text-[9px] min-[400px]:w-[102px] min-[400px]:text-[10px]"
+                      : "w-[min(30vw,110px)] px-3 py-2.5 text-[10px] min-[400px]:w-[118px] min-[400px]:text-[11px]"
                   }`}
                   style={{
                     borderRadius: RADII[i % 3],
@@ -123,7 +124,7 @@ export function Problems() {
             whileInView={{ opacity: 1, scale: 1.05 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65, delay: 0.15 }}
-            className="absolute left-1/2 top-1/2 z-20 flex w-[min(188px,48vw)] max-w-[188px] -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-brand px-4 py-4 text-center text-[12px] font-bold leading-snug text-white shadow-[0_0_60px_rgba(255,45,55,0.45)] min-[400px]:w-[200px] min-[400px]:max-w-[200px] min-[400px]:px-6 min-[400px]:py-6 min-[400px]:text-base"
+            className="absolute left-1/2 top-1/2 z-20 flex w-[min(160px,42vw)] max-w-[160px] -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-brand px-4 py-4 text-center text-[11px] font-bold leading-snug text-white shadow-[0_0_60px_rgba(255,45,55,0.45)] min-[400px]:w-[172px] min-[400px]:max-w-[172px] min-[400px]:px-5 min-[400px]:py-5 min-[400px]:text-sm"
             style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
           >
             Why People Choose Us

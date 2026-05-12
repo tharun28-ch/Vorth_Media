@@ -61,7 +61,7 @@ export function Hero() {
           className="mx-auto inline-flex items-center justify-center gap-2 text-sm tracking-[0.08em] text-white/85 md:text-base"
         >
           <span>we are a</span>
-          <span className="relative inline-block text-left">
+          <span className="relative inline-flex min-w-[130px] justify-center text-left md:min-w-[160px]">
             <AnimatePresence mode="wait">
               <motion.span
                 key={EYEBROW[i]}
@@ -87,7 +87,7 @@ export function Hero() {
           Your content is the sales engine.
           <br />
           We{" "}
-          <span className="relative inline-block text-left align-baseline">
+          <span className="relative inline-flex min-w-[70px] justify-center text-left align-baseline md:min-w-[100px]">
             <AnimatePresence mode="wait">
               <motion.span
                 key={HEAD[i]}

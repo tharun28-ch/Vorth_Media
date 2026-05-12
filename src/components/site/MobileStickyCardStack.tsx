@@ -3,68 +3,77 @@ import { cn } from "@/lib/utils";
 
 type MobileStickyCardStackProps = {
   cards: ReactNode[];
-  /** Renders above the first card inside the sticky frame (e.g. section title) */
-  pinnedHeader?: ReactNode;
+  /** Optional title for the section */
+  title?: ReactNode;
+  /** Optional description for the section */
+  description?: ReactNode;
   className?: string;
-  /** Root `top` for the first (framed) sticky card, in rem */
-  stickyTopRem?: number;
-  /** Extra `top` below `--stack-top` for every card after the first (same offset; z-index orders the stack) */
-  layerInsetPx?: number;
-  /** Empty scroll height before each card after the first (smaller = less gap, snappier stack) */
-  segmentVh?: number;
-  frameClassName?: string;
+  /** Top position for the sticky elements, in px */
+  stickyTopPx?: number;
+  /** Vertical offset between stacked cards, in px */
+  stackOffsetPx?: number;
+  /** Scroll distance required to 'stack' each card */
+  scrollBufferVh?: number;
 };
 
 export function MobileStickyCardStack({
   cards,
-  pinnedHeader,
+  title,
+  description,
   className,
-  stickyTopRem = 6,
-  layerInsetPx = 12,
-  segmentVh = 32,
-  frameClassName,
+  stickyTopPx = 70,
+  stackOffsetPx = 8,
+  scrollBufferVh = 32,
 }: MobileStickyCardStackProps) {
   if (cards.length === 0) return null;
 
-  const [first, ...rest] = cards;
-  /** Spacers + stacked stickies share this root so sticky isn’t clipped by a short per-card wrapper. */
-  const rootStyle: CSSProperties = {
-    ["--stack-top" as string]: `${stickyTopRem}rem`,
-    ...(rest.length > 0
-      ? { minHeight: `max(100vh, ${rest.length * segmentVh + 18}vh)` }
-      : undefined),
-  };
+  // Calculate total height: each card adds to the scrollable length. 
+  // We reduce the buffer to ensure it stops 'snappily'.
+  const totalScrollHeight = `${(cards.length - 1) * scrollBufferVh + 80}vh`;
 
   return (
     <div className={cn("md:hidden", className)}>
-      <div className="relative w-full" style={rootStyle}>
-        <div className="sticky z-10 w-full" style={{ top: "var(--stack-top)" }}>
-          <div
-            className={cn(
-              "rounded-3xl border border-white/20 bg-black/50 p-3 shadow-[0_24px_80px_rgba(0,0,0,0.7)] ring-1 ring-white/10 backdrop-blur-sm",
-              pinnedHeader && "flex flex-col gap-6",
-              frameClassName,
-            )}
-          >
-            {pinnedHeader}
-            {first}
-          </div>
+      <div className="relative w-full" style={{ minHeight: totalScrollHeight }}>
+        {/* Sticky Header Section - Now stays at the top, below the site header */}
+        <div 
+          className="sticky z-50 mb-10 px-4 text-center pb-6 pt-4 bg-black/90 backdrop-blur-md"
+          style={{ top: "80px" }}
+        >
+          {title && <div className="mb-2">{title}</div>}
+          {description && <div className="text-[13px] leading-relaxed text-white/70">{description}</div>}
         </div>
 
-        {rest.map((node, i) => (
-          <Fragment key={i}>
-            <div className="w-full shrink-0" style={{ minHeight: `${segmentVh}vh` }} aria-hidden />
-            <div
-              className="sticky w-full"
-              style={{
-                top: `calc(var(--stack-top) + ${layerInsetPx}px)`,
-                zIndex: 20 + i * 10,
-              }}
-            >
-              <div className="rounded-2xl shadow-2xl ring-1 ring-black/30">{node}</div>
-            </div>
-          </Fragment>
-        ))}
+        <div className="relative">
+          {cards.map((node, i) => (
+            <Fragment key={i}>
+              {/* The sticky card */}
+              <div
+                className="sticky w-full px-5"
+                style={{
+                  // Adjusted top: 80px (site header) + ~90px (stack header) + stack offset
+                  top: `${stickyTopPx + 110 + i * stackOffsetPx}px`,
+                  zIndex: 10 + i * 10,
+                }}
+              >
+                <div className="rounded-[2.5rem] border border-white/10 bg-surface/98 shadow-[0_25px_70px_rgba(0,0,0,0.9)] backdrop-blur-2xl ring-1 ring-white/5 overflow-hidden">
+                  {node}
+                </div>
+              </div>
+              
+              {/* Spacer to create scroll length for the NEXT card to slide up */}
+              {i < cards.length - 1 && (
+                <div 
+                  className="w-full shrink-0" 
+                  style={{ height: `${scrollBufferVh}vh` }} 
+                  aria-hidden 
+                />
+              )}
+            </Fragment>
+          ))}
+        </div>
+        
+        {/* Final buffer - reduced to keep it tight */}
+        <div style={{ height: "4vh" }} />
       </div>
     </div>
   );

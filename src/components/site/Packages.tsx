@@ -182,10 +182,10 @@ export function Packages() {
         </div>
 
         <MobileStickyCardStack
-          pinnedHeader={<PackagesHeading />}
+          title={<PackagesHeading />}
           cards={mobileStackCards}
           className="md:hidden"
-          segmentVh={36}
+          scrollBufferVh={40}
         />
 
         <div className="mt-14 hidden auto-rows-fr gap-5 md:grid md:grid-cols-2 lg:grid-cols-6">

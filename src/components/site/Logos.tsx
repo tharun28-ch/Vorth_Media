@@ -20,28 +20,32 @@ export function Logos() {
 
         {/* ── Mobile: auto-scrolling marquee (left → right) ── */}
         <div className="mt-14 overflow-hidden sm:hidden">
-          <div className="logos-marquee flex gap-10">
-            {MARQUEE_LOGOS.map((brand, i) => (
-              <div
-                key={`${brand.name}-${i}`}
-                className="flex shrink-0 flex-col items-center gap-3"
-              >
-                <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-surface/60 transition-all duration-300">
-                  {brand.image ? (
-                    <img
-                      src={brand.image}
-                      alt={brand.name}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-3xl font-bold text-brand">
-                      {brand.name.charAt(0)}
+          <div className="logos-marquee flex w-max">
+            {[0, 1].map((setIndex) => (
+              <div key={setIndex} className="flex gap-10 pr-10">
+                {LOGOS.map((brand, i) => (
+                  <div
+                    key={`${brand.name}-${setIndex}-${i}`}
+                    className="flex shrink-0 flex-col items-center gap-3"
+                  >
+                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-surface/60 transition-all duration-300">
+                      {brand.image ? (
+                        <img
+                          src={brand.image}
+                          alt={brand.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-3xl font-bold text-brand">
+                          {brand.name.charAt(0)}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] font-semibold tracking-widest text-white/60">
+                      {brand.name.toUpperCase()}
                     </span>
-                  )}
-                </div>
-                <span className="text-[10px] font-semibold tracking-widest text-white/60">
-                  {brand.name.toUpperCase()}
-                </span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
@@ -86,8 +90,7 @@ export function Logos() {
           100% { transform: translateX(0%); }
         }
         .logos-marquee {
-          animation: marquee-ltr 12s linear infinite;
-          width: max-content;
+          animation: marquee-ltr 25s linear infinite;
         }
       `}</style>
     </section>
