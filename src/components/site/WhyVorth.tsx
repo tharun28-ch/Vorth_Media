@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import doodleReel from "@/assets/doodle-reel.png";
+import { MobileStickyCardStack } from "@/components/site/MobileStickyCardStack";
 
 type Item = { t: string; d: string; variant: "white" | "red" | "dark"; span?: string };
 
@@ -39,9 +40,48 @@ const ITEMS: Item[] = [
   },
 ];
 
-export function WhyVorth() {
+function whySurfaceClass(it: Item) {
+  const base =
+    it.variant === "white" ? "bento-white" : it.variant === "red" ? "bento-red" : "bento-dark";
+  return `${base} ${it.span ?? ""} rounded-2xl p-8 transition md:hover:-translate-y-1`;
+}
+
+function WhyCardBody({ it }: { it: Item }) {
+  const muted = "text-white/85";
+  const iconBg = it.variant === "red" ? "bg-white text-brand" : "bg-brand/20 text-brand";
   return (
-    <section id="about" className="relative overflow-hidden bg-black py-28">
+    <>
+      <div
+        className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full ${iconBg}`}
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 className="text-xl font-bold">{it.t}</h3>
+      <p className={`mt-2 ${muted}`}>{it.d}</p>
+    </>
+  );
+}
+
+export function WhyVorth() {
+  const mobileStackCards = ITEMS.map((it) => (
+    <div key={it.t} className={whySurfaceClass(it)}>
+      <WhyCardBody it={it} />
+    </div>
+  ));
+
+  return (
+    <section id="about" className="relative overflow-x-clip bg-black py-28">
       <img
         src={doodleReel}
         alt=""
@@ -51,17 +91,21 @@ export function WhyVorth() {
         style={{ ["--dur" as string]: "8s" }}
       />
       <div className="container-x relative z-10">
-        <h2 className="text-center text-4xl font-bold md:text-5xl">Why Choose Vorth</h2>
-        <div className="mx-auto mt-14 grid max-w-5xl auto-rows-fr gap-5 md:grid-cols-3">
+        <h2 className="hidden text-center text-4xl font-bold md:block md:text-5xl">
+          Why Choose Vorth
+        </h2>
+
+        <MobileStickyCardStack
+          pinnedHeader={
+            <h2 className="text-center text-4xl font-bold md:text-5xl">Why Choose Vorth</h2>
+          }
+          cards={mobileStackCards}
+          className="md:hidden"
+          segmentVh={26}
+        />
+
+        <div className="mx-auto mt-14 hidden max-w-5xl auto-rows-fr gap-5 md:grid md:grid-cols-3">
           {ITEMS.map((it, i) => {
-            const base =
-              it.variant === "white"
-                ? "bento-white"
-                : it.variant === "red"
-                  ? "bento-red"
-                  : "bento-dark";
-            const muted = "text-white/85";
-            const iconBg = it.variant === "red" ? "bg-white text-brand" : "bg-brand/20 text-brand";
             return (
               <motion.div
                 key={it.t}
@@ -69,26 +113,9 @@ export function WhyVorth() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className={`${base} ${it.span ?? ""} rounded-2xl p-8 transition hover:-translate-y-1`}
+                className={whySurfaceClass(it)}
               >
-                <div
-                  className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full ${iconBg}`}
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold">{it.t}</h3>
-                <p className={`mt-2 ${muted}`}>{it.d}</p>
+                <WhyCardBody it={it} />
               </motion.div>
             );
           })}

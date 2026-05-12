@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import doodleMegaphone from "@/assets/doodle-megaphone.png";
+import { MobileStickyCardStack } from "@/components/site/MobileStickyCardStack";
 
 type Bullet = {
   title: string;
@@ -86,9 +87,13 @@ const PACKAGES: Pkg[] = [
   },
 ];
 
-function Card({ pkg, idx }: { pkg: Pkg; idx: number }) {
+function packageSurfaceClass(pkg: Pkg) {
   const base =
     pkg.variant === "white" ? "bento-white" : pkg.variant === "red" ? "bento-red" : "bento-dark";
+  return `${base} ${pkg.span ?? ""} group relative flex flex-col rounded-2xl p-7 transition md:hover:-translate-y-1`;
+}
+
+function PackageCardBody({ pkg }: { pkg: Pkg }) {
   const muted = pkg.variant === "red" ? "text-white/85" : "text-white/70";
   const dot = pkg.variant === "red" ? "bg-white" : "bg-brand";
   const priceBox = pkg.variant === "red" ? "bg-black text-white" : "bg-brand text-white";
@@ -98,13 +103,7 @@ function Card({ pkg, idx }: { pkg: Pkg; idx: number }) {
       : "bg-brand text-white hover:scale-105";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: idx * 0.06 }}
-      className={`${base} ${pkg.span ?? ""} group relative flex flex-col rounded-2xl p-7 transition hover:-translate-y-1`}
-    >
+    <>
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <h4 className="text-xl font-bold leading-tight">{pkg.name}</h4>
         {pkg.price && (
@@ -131,13 +130,44 @@ function Card({ pkg, idx }: { pkg: Pkg; idx: number }) {
       >
         {pkg.cta}
       </Link>
+    </>
+  );
+}
+
+function PackagesHeading() {
+  return (
+    <div className="text-center">
+      <h2 className="text-4xl font-bold md:text-5xl">Our Packages</h2>
+      <p className="mx-auto mt-4 max-w-2xl text-white/80">
+        Tailored solutions for every stage of your journey.
+      </p>
+    </div>
+  );
+}
+
+function Card({ pkg, idx }: { pkg: Pkg; idx: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, delay: idx * 0.06 }}
+      className={packageSurfaceClass(pkg)}
+    >
+      <PackageCardBody pkg={pkg} />
     </motion.div>
   );
 }
 
 export function Packages() {
+  const mobileStackCards = PACKAGES.map((pkg) => (
+    <div key={pkg.name} className={packageSurfaceClass(pkg)}>
+      <PackageCardBody pkg={pkg} />
+    </div>
+  ));
+
   return (
-    <section id="services" className="relative overflow-hidden bg-black py-28">
+    <section id="services" className="relative overflow-x-clip bg-black py-28">
       <img
         src={doodleMegaphone}
         alt=""
@@ -147,14 +177,18 @@ export function Packages() {
         style={{ ["--dur" as string]: "9s" }}
       />
       <div className="container-x relative z-10">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold md:text-5xl">Our Packages</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-white/80">
-            Tailored solutions for every stage of your journey.
-          </p>
+        <div className="hidden md:block">
+          <PackagesHeading />
         </div>
 
-        <div className="mt-14 grid auto-rows-fr gap-5 md:grid-cols-2 lg:grid-cols-6">
+        <MobileStickyCardStack
+          pinnedHeader={<PackagesHeading />}
+          cards={mobileStackCards}
+          className="md:hidden"
+          segmentVh={36}
+        />
+
+        <div className="mt-14 hidden auto-rows-fr gap-5 md:grid md:grid-cols-2 lg:grid-cols-6">
           {PACKAGES.map((p, i) => (
             <Card key={p.name} pkg={p} idx={i} />
           ))}

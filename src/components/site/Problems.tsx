@@ -39,9 +39,27 @@ const RADII = [
   "55% 45% 40% 60% / 45% 55% 45% 55%",
 ];
 
+/** Inner + outer elliptical rings so blob centers stay separated around the center CTA (mobile). */
+function mobileBlobRingPosition(i: number, total: number) {
+  const innerCount = Math.ceil(total / 2);
+  const isInner = i < innerCount;
+  const slot = isInner ? i : i - innerCount;
+  const ringSize = isInner ? innerCount : total - innerCount;
+  const step = 360 / ringSize;
+  const angleDeg = -90 + step * slot + (isInner ? 0 : step / 2);
+  const rx = isInner ? 31 : 45;
+  const ry = isInner ? 26 : 39;
+  const rad = (angleDeg * Math.PI) / 180;
+  return {
+    left: `${50 + rx * Math.cos(rad)}%`,
+    top: `${50 + ry * Math.sin(rad)}%`,
+    isInner,
+  };
+}
+
 export function Problems() {
   return (
-    <section className="relative overflow-hidden bg-black py-28">
+    <section className="relative overflow-x-clip bg-black py-28">
       <img
         src={doodleCamera}
         alt=""
@@ -68,32 +86,48 @@ export function Problems() {
           You're not alone. These are the questions we hear every week — and exactly what we fix.
         </p>
 
-        {/* ── Mobile: clean stacked list ── */}
-        <div className="mt-10 flex flex-col items-center gap-3 md:hidden">
-          {/* "Why People Choose Us" badge */}
+        {/* ── Mobile: dual-ring blob layout (avoids center-pile overlap from compressed desktop coords) ── */}
+        <div className="relative mx-auto mt-10 h-[min(620px,82svh)] w-full max-w-[min(420px,100%)] overflow-visible md:hidden">
+          {PROBLEMS.map((text, i) => {
+            const { left, top, isInner } = mobileBlobRingPosition(i, PROBLEMS.length);
+            return (
+              <motion.div
+                key={text}
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: (i % 12) * 0.06 }}
+                className="absolute z-[5] -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                style={{ left, top }}
+              >
+                <div
+                  className={`float-y bg-surface-2/85 text-center italic leading-snug text-white/90 shadow-sm transition hover:scale-105 hover:bg-surface-2 active:scale-[1.03] ${
+                    isInner
+                      ? "w-[104px] px-2.5 py-2 text-[10px] min-[400px]:w-[112px] min-[400px]:text-[11px]"
+                      : "w-[min(34vw,124px)] px-3 py-2.5 text-[11px] min-[400px]:w-[132px] min-[400px]:text-[12px]"
+                  }`}
+                  style={{
+                    borderRadius: RADII[i % 3],
+                    ["--dur" as string]: `${4 + (i % 4)}s`,
+                    animationDelay: `${(i % 5) * 0.4}s`,
+                  }}
+                >
+                  "{text}"
+                </div>
+              </motion.div>
+            );
+          })}
+
           <motion.div
             initial={{ opacity: 0, scale: 0.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1.05 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-2 w-[160px] bg-brand px-5 py-4 text-center text-sm font-bold text-white shadow-[0_0_40px_rgba(255,45,55,0.4)]"
+            transition={{ duration: 0.65, delay: 0.15 }}
+            className="absolute left-1/2 top-1/2 z-20 flex w-[min(188px,48vw)] max-w-[188px] -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-brand px-4 py-4 text-center text-[12px] font-bold leading-snug text-white shadow-[0_0_60px_rgba(255,45,55,0.45)] min-[400px]:w-[200px] min-[400px]:max-w-[200px] min-[400px]:px-6 min-[400px]:py-6 min-[400px]:text-base"
             style={{ borderRadius: "55% 45% 60% 40% / 50% 60% 40% 50%" }}
           >
             Why People Choose Us
           </motion.div>
-
-          {PROBLEMS.map((text, i) => (
-            <motion.div
-              key={text}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.35, delay: i * 0.04 }}
-              className="w-full max-w-xs rounded-2xl border border-white/8 bg-surface-2/80 px-4 py-3 text-center text-sm italic text-white/85"
-            >
-              "{text}"
-            </motion.div>
-          ))}
         </div>
 
         {/* ── Desktop: absolute blob layout ── */}
