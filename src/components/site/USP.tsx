@@ -4,7 +4,7 @@ const STEPS = ["Knowledge", "Story", "Brand", "Revenue"];
 
 export function USP() {
   return (
-    <section className="bg-black py-28">
+    <section className="bg-black py-16 md:py-28">
       <div className="container-x text-center">
         <h2 className="mx-auto max-w-3xl text-4xl font-bold leading-[1.25] md:text-5xl">
           We turn your knowledge into <span className="text-brand">story</span>. <br />

@@ -4,30 +4,30 @@ import { useState } from "react";
 const FAQS = [
   {
     q: "How fast can we start?",
-    a: "Most engagements kick off within 7 days of your discovery call. We move fast without skipping strategy.",
+    a: "Most engagements kick off within 7 days of your discovery call We move fast without skipping strategy",
   },
   {
     q: "Do you work with early-stage brands?",
-    a: "Yes. We have packages tailored for founders building from zero, plus enterprise retainers for scale-ups.",
+    a: "Yes We have packages tailored for founders building from zero plus enterprise retainers for scale ups",
   },
   {
     q: "What's included in a retainer?",
-    a: "Strategy, content production (reels, ads, photography), performance media, and monthly reporting — fully managed.",
+    a: "Strategy content production (reels ads photography) performance media and monthly reporting fully managed",
   },
   {
     q: "Where are you based?",
-    a: "We're a remote-first studio with hubs in Bengaluru and Mumbai, working with brands globally.",
+    a: "We're a remote first studio with hubs in Bengaluru and Mumbai working with brands globally",
   },
   {
     q: "Do you guarantee results?",
-    a: "We guarantee craft, communication, and consistency. Performance is a partnership — we share dashboards weekly so you see every number.",
+    a: "We guarantee craft communication and consistency Performance is a partnership we share dashboards weekly so you see every number",
   },
 ];
 
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="bg-black py-24">
+    <section className="bg-black py-16 md:py-24">
       <div className="container-x">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

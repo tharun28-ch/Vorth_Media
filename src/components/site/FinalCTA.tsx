@@ -5,37 +5,37 @@ import rocket from "@/assets/doodle-rocket.png";
 const FOOTER_FAQS = [
   {
     q: "How fast can we start?",
-    a: "Most engagements kick off within 7 days of your discovery call.",
+    a: "Most engagements kick off within 7 days of your discovery call",
   },
   {
     q: "Do you work with early-stage brands?",
-    a: "Yes — we have packages for founders building from zero and retainers for scale-ups.",
+    a: "Yes we have packages for founders building from zero and retainers for scale ups",
   },
   {
     q: "What's included in a retainer?",
-    a: "Strategy, content production, performance media, and weekly reporting — fully managed.",
+    a: "Strategy content production performance media and weekly reporting fully managed",
   },
   {
     q: "Do you guarantee results?",
-    a: "We guarantee craft, communication, and consistency. You get dashboards weekly.",
+    a: "We guarantee craft communication and consistency You get dashboards weekly",
   },
   {
     q: "Do you handle scripting and creative direction?",
-    a: "Yes — every package includes scripting, shot planning, and creative direction. You just show up; we handle the rest.",
+    a: "Yes every package includes scripting shot planning and creative direction You just show up we handle the rest",
   },
   {
     q: "Can I choose only content or only ads?",
-    a: "Absolutely. Our packages are modular. Start with content production, add performance marketing later, or run both simultaneously.",
+    a: "Absolutely Our packages are modular Start with content production add performance marketing later or run both simultaneously",
   },
   {
     q: "What ROAS can I expect from paid ads?",
-    a: "Our clients have averaged 4x ROAS. Results depend on offer strength, budget, and audience — we'll set realistic benchmarks in your discovery call.",
+    a: "Our clients have averaged 4x ROAS Results depend on offer strength budget and audience we'll set realistic benchmarks in your discovery call",
   },
 ];
 
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-black py-32">
+    <section className="relative overflow-hidden bg-black py-16 md:py-32">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/2 h-[400px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/15 blur-3xl" />
       </div>
@@ -70,7 +70,7 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
       {!minimal && (
         <>
           {/* Footer FAQ */}
-          <div className="container-x py-16">
+          <div className="container-x py-10 md:py-16">
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
                 Quick answers

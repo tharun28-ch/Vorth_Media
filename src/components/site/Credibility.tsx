@@ -48,7 +48,7 @@ function CountUp({
 
 export function Credibility() {
   return (
-    <section className="bg-black py-24">
+    <section className="bg-black py-16 md:py-24">
       <div className="container-x text-center">
         <h2 className="text-4xl font-bold md:text-5xl">By The Numbers</h2>
         <div className="mx-auto mt-14 grid max-w-6xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">

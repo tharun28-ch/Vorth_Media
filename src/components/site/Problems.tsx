@@ -3,14 +3,14 @@ import doodleCamera from "@/assets/doodle-camera.png";
 import doodlePlay from "@/assets/doodle-play.png";
 
 const PROBLEMS = [
-  "Invisible Online: I'm an expert, but nobody sees me!",
-  "I Know More, but My Competitor is Fully Booked!",
+  "Invisible Online I'm an expert but nobody sees me!",
+  "I Know More but My Competitor is Fully Booked!",
   "Money Burned on Ads with Nothing to Show!",
-  "Views are Sky-High, but My Bank Account is Still!",
+  "Views are Sky High but My Bank Account is Still!",
   "Why are My Campaigns Just Not Converting?",
-  "Ads have Reach, but Zero Actual Leads!",
-  "Great Ideas Stuck in My Head, Nothing on Screen!",
-  "Posting Constantly, but Where are the Leads?",
+  "Ads have Reach but Zero Actual Leads!",
+  "Great Ideas Stuck in My Head Nothing on Screen!",
+  "Posting Constantly but Where are the Leads?",
   "Running Ads with Zero Strategy and Just Hoping!",
   "My amateur Page is definitely Costing Me Clients!",
   "My DIY Ads have Results that Make Zero Sense!",
@@ -60,7 +60,7 @@ function mobileBlobRingPosition(i: number, total: number) {
 
 export function Problems() {
   return (
-    <section className="relative overflow-x-clip bg-black py-28">
+    <section className="relative overflow-x-clip bg-black py-16 md:py-28">
       <img
         src={doodleCamera}
         alt=""
@@ -84,7 +84,7 @@ export function Problems() {
       <div className="container-x">
         <h2 className="text-center text-4xl font-bold md:text-5xl">Common Challenges We Solve</h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-white/70">
-          You're not alone. These are the questions we hear every week — and exactly what we fix.
+          You're not alone. These are the questions we hear every week and exactly what we fix.
         </p>
 
         {/* ── Mobile: dual-ring blob layout (avoids center-pile overlap from compressed desktop coords) ── */}

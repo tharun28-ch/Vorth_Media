@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Linkedin, Instagram, ChevronLeft, ChevronRight } from "lucide-react";
 
 const TEAM = [
-  { nickname: "The Architect", name: "Monish Aravind", role: "Founder & CEO", initials: "MA", image: "/team/member1.png", linkedin: "https://www.linkedin.com/", instagram: "https://www.instagram.com/", bio: "Monish leads brand strategy and growth roadmaps for every Vorth client. He blends storytelling with sharp business thinking to align brand and revenue from day one." },
-  { nickname: "The Growth Engine", name: "Kumaran", role: "Marketing Head", initials: "K", image: "/team/member2.png", linkedin: "https://www.linkedin.com/", bio: "Kumaran owns performance marketing and full-funnel scaling. He's obsessed with creative-led growth and treats every campaign like it's his own legacy." },
-  { nickname: "The System Builder", name: "Shashank", role: "Tech Head", initials: "SH", image: "/team/member4.png", linkedin: "https://www.linkedin.com/", bio: "Shashank architects the tech backbone behind every Vorth system — from automation pipelines to digital infrastructure that keeps everything running at scale." },
-  { nickname: "The Story Engine", name: "Sanjai Suresh", role: "Content Production Head", initials: "SS", image: "/team/member3.png", linkedin: "https://www.linkedin.com/", bio: "Sanjai runs end-to-end production and the creative supply chain. He turns ambitious ideas into shipped work with calm execution and zero drama." },
-  { nickname: "The Cut Master", name: "Vaishnavi", role: "Lead Editor", initials: "V", image: "/team/member5.png", linkedin: "https://www.linkedin.com/", bio: "Vaishnavi brings every frame to life with precision editing and a sharp eye for pacing. She ensures every piece of content feels polished and scroll-stopping." },
-  { nickname: "The Frame Shaper", name: "Hemanth", role: "Lead Editor", initials: "H", image: "/team/member6.png", linkedin: "https://www.linkedin.com/", bio: "Hemanth crafts cinematic edits that elevate raw footage into compelling narratives. His attention to rhythm and detail makes every deliverable hit different." },
+  { nickname: "The Architect", name: "Monish Aravind", role: "Founder & CEO", initials: "MA", image: "/team/member1.png", linkedin: "https://www.linkedin.com/", instagram: "https://www.instagram.com/", bio: "Monish leads brand strategy and growth roadmaps for every Vorth client He blends storytelling with sharp business thinking to align brand and revenue from day one" },
+  { nickname: "The Growth Engine", name: "Kumaran", role: "Marketing Head", initials: "K", image: "/team/member2.png", linkedin: "https://www.linkedin.com/", bio: "Kumaran owns performance marketing and full funnel scaling He's obsessed with creative led growth and treats every campaign like it's his own legacy" },
+  { nickname: "The System Builder", name: "Shashank", role: "Tech Head", initials: "SH", image: "/team/member4.png", linkedin: "https://www.linkedin.com/", bio: "Shashank architects the tech backbone behind every Vorth system from automation pipelines to digital infrastructure that keeps everything running at scale" },
+  { nickname: "The Story Engine", name: "Sanjai Suresh", role: "Content Production Head", initials: "SS", image: "/team/member3.png", linkedin: "https://www.linkedin.com/", bio: "Sanjai runs end to end production and the creative supply chain He turns ambitious ideas into shipped work with calm execution and zero drama" },
+  { nickname: "The Cut Master", name: "Vaishnavi", role: "Lead Editor", initials: "V", image: "/team/member5.png", linkedin: "https://www.linkedin.com/", bio: "Vaishnavi brings every frame to life with precision editing and a sharp eye for pacing She ensures every piece of content feels polished and scroll stopping" },
+  { nickname: "The Frame Shaper", name: "Hemanth", role: "Lead Editor", initials: "H", image: "/team/member6.png", linkedin: "https://www.linkedin.com/", bio: "Hemanth crafts cinematic edits that elevate raw footage into compelling narratives His attention to rhythm and detail makes every deliverable hit different" },
 ];
 
 const SLIDE_DURATION = 2000; // ms per slide
@@ -71,7 +71,7 @@ export function Team() {
   const m = TEAM[currentIndex];
 
   return (
-    <section className="bg-black py-28 text-white">
+    <section className="bg-black py-16 md:py-28 text-white">
       <div className="container-x">
         <div className="mx-auto max-w-3xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-brand">
@@ -83,7 +83,7 @@ export function Team() {
             Built by people who <span className="text-brand">obsess</span> over the craft.
           </h2>
           <p className="mt-4 text-white/60">
-            Six minds, one studio. Strategy, tech, story, design and performance — under one roof.
+            Six minds one studio Strategy tech story design and performance under one roof
           </p>
         </div>
 

@@ -21,7 +21,7 @@ type Pkg = {
 const PACKAGES: Pkg[] = [
   {
     name: "Growth Production",
-    meta: "Maximum content. Maximum growth. 12 Reels · 2 Shoot Days · 6 Carousels",
+    meta: "Maximum content Maximum growth 12 Reels 2 Shoot Days 6 Carousels",
     bullets: [
       { title: "2 monthly strategy calls" },
       { title: "12 scripts written for you" },
@@ -34,7 +34,7 @@ const PACKAGES: Pkg[] = [
   },
   {
     name: "Starter Production",
-    meta: "Consistent content. Structured growth. 8 Reels · 1 Shoot Day · 4 Carousels",
+    meta: "Consistent content Structured growth 8 Reels 1 Shoot Day 4 Carousels",
     bullets: [
       { title: "Monthly strategy session" },
       { title: "8 scripts written for you" },
@@ -47,9 +47,9 @@ const PACKAGES: Pkg[] = [
   },
   {
     name: "Content Consulting",
-    meta: "Clarity before scale. 12 Sessions · 3 Months",
+    meta: "Clarity before scale 12 Sessions 3 Months",
     bullets: [
-      { title: "Weekly 1-on-1 strategy" },
+      { title: "Weekly 1 on 1 strategy" },
       { title: "Monthly content planning" },
       { title: "Script guidance" },
       { title: "Performance tracking" },
@@ -61,11 +61,11 @@ const PACKAGES: Pkg[] = [
   {
     name: "Custom Growth Plan",
     price: "Custom",
-    meta: "Built for your goals. Flexible scope · Scalable",
+    meta: "Built for your goals Flexible scope Scalable",
     bullets: [
       { title: "Tailored content strategy" },
       { title: "Custom production volume" },
-      { title: "Platform-specific growth" },
+      { title: "Platform specific growth" },
       { title: "Dedicated support" },
     ],
     variant: "dark",
@@ -74,7 +74,7 @@ const PACKAGES: Pkg[] = [
   },
   {
     name: "Performance Marketing",
-    meta: "Turn content into revenue. Meta Ads · FB + IG",
+    meta: "Turn content into revenue Meta Ads FB + IG",
     bullets: [
       { title: "Full funnel ad strategy" },
       { title: "4 ad creatives monthly" },
@@ -167,7 +167,7 @@ export function Packages() {
   ));
 
   return (
-    <section id="services" className="relative overflow-x-clip bg-black py-28">
+    <section id="services" className="relative overflow-x-clip bg-black py-16 md:py-28">
       <img
         src={doodleMegaphone}
         alt=""

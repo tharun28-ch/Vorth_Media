@@ -7,23 +7,23 @@ type Item = { t: string; d: string; variant: "white" | "red" | "dark"; span?: st
 const ITEMS: Item[] = [
   {
     t: "Deep Research First",
-    d: "We study your story, your audience, and your goals before we write a single word.",
+    d: "We study your story your audience and your goals before we write a single word",
     variant: "red",
     span: "md:col-span-2",
   },
   {
     t: "All-In-One Team",
-    d: "Strategy, scripting, shooting, editing, and social media—one team handles everything for you.",
+    d: "Strategy scripting shooting editing and social media one team handles everything for you",
     variant: "white",
   },
   {
     t: "Your Genuine Voice",
-    d: "Every script is built from your own voice notes and stories so it actually sounds like you.",
+    d: "Every script is built from your own voice notes and stories so it actually sounds like you",
     variant: "dark",
   },
   {
     t: "Compounding Growth",
-    d: "The longer we work together, the deeper we understand your brand — every month builds on the last, compounding into stronger content, sharper messaging, and better results.",
+    d: "The longer we work together the deeper we understand your brand every month builds on the last compounding into stronger content sharper messaging and better results",
     variant: "white",
     span: "md:col-span-2",
   },
@@ -34,8 +34,8 @@ const ITEMS: Item[] = [
     span: "md:col-span-2",
   },
   {
-    t: "Systems, Not Chaos",
-    d: "Batch scripting and planned delivery keep your page consistent without you chasing us.",
+    t: "Systems Not Chaos",
+    d: "Batch scripting and planned delivery keep your page consistent without you chasing us",
     variant: "red",
   },
 ];
@@ -81,7 +81,7 @@ export function WhyVorth() {
   ));
 
   return (
-    <section id="about" className="relative overflow-x-clip bg-black py-28">
+    <section id="about" className="relative overflow-x-clip bg-black py-16 md:py-28">
       <img
         src={doodleReel}
         alt=""

@@ -13,7 +13,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[92vh] items-center overflow-hidden bg-black pt-28">
+    <section className="relative flex min-h-[92vh] items-center overflow-hidden bg-black pt-20 md:pt-28">
       {/* subtle red glow */}
       <div className="pointer-events-none absolute inset-0">
         {/* grid lines */}
