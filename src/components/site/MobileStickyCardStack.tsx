@@ -23,13 +23,12 @@ export function MobileStickyCardStack({
   className,
   stickyTopPx = 70,
   stackOffsetPx = 8,
-  scrollBufferVh = 32,
+  scrollBufferVh = 80,
 }: MobileStickyCardStackProps) {
   if (cards.length === 0) return null;
 
-  // Calculate total height: each card adds to the scrollable length. 
-  // We reduce the buffer to ensure it stops 'snappily'.
-  const totalScrollHeight = `${(cards.length - 1) * scrollBufferVh + 80}vh`;
+  // Calculate total height: each card adds a significant scrollable distance.
+  const totalScrollHeight = `${(cards.length - 1) * scrollBufferVh + 100}vh`;
 
   return (
     <div className={cn("md:hidden", className)}>

@@ -185,7 +185,6 @@ export function Packages() {
           title={<PackagesHeading />}
           cards={mobileStackCards}
           className="md:hidden"
-          scrollBufferVh={40}
         />
 
         <div className="mt-14 hidden auto-rows-fr gap-5 md:grid md:grid-cols-2 lg:grid-cols-6">

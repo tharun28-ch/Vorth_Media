@@ -99,7 +99,6 @@ export function WhyVorth() {
           title={<h2 className="text-4xl font-bold md:text-5xl">Why Choose Vorth</h2>}
           cards={mobileStackCards}
           className="md:hidden"
-          scrollBufferVh={28}
         />
 
         <div className="mx-auto mt-14 hidden max-w-5xl auto-rows-fr gap-5 md:grid md:grid-cols-3">
