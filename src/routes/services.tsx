@@ -118,12 +118,12 @@ function ServiceCard({ pkg, idx, isStatic }: { pkg: Pkg; idx: number; isStatic?:
       ? "bg-white text-brand hover:bg-black hover:text-white"
       : "bg-brand text-white hover:scale-105";
 
-  const content = (
-    <div className={`${base} ${pkg.span ?? ""} group relative flex flex-col h-full rounded-2xl p-7 transition hover:-translate-y-1`}>
+  const cardContent = (
+    <div className={`${base} group relative flex flex-col h-full rounded-2xl p-7 transition hover:-translate-y-1`}>
       <div className="flex items-start justify-between gap-4">
-        <h4 className="text-xl font-bold leading-tight">{pkg.name}</h4>
+        <h4 className="text-xl font-bold leading-tight flex-1">{pkg.name}</h4>
         {pkg.price && (
-          <div className={`rounded-md px-3 py-1.5 sm:text-right w-fit ${priceBox}`}>
+          <div className={`rounded-md px-3 py-1.5 sm:text-right shrink-0 ${priceBox}`}>
             <div className="text-lg font-bold leading-none whitespace-nowrap">{pkg.price}</div>
           </div>
         )}
@@ -149,7 +149,7 @@ function ServiceCard({ pkg, idx, isStatic }: { pkg: Pkg; idx: number; isStatic?:
     </div>
   );
 
-  if (isStatic) return content;
+  if (isStatic) return cardContent;
 
   return (
     <motion.div
@@ -157,9 +157,9 @@ function ServiceCard({ pkg, idx, isStatic }: { pkg: Pkg; idx: number; isStatic?:
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, delay: idx * 0.06 }}
-      className="h-full"
+      className={`h-full ${pkg.span ?? ""}`}
     >
-      {content}
+      {cardContent}
     </motion.div>
   );
 }
@@ -188,7 +188,7 @@ function ServicesPage() {
             </p>
           </div>
 
-          <div className="hidden md:grid mt-16 grid auto-rows-fr gap-5 md:grid-cols-2 lg:grid-cols-6">
+          <div className="hidden md:grid mt-16 auto-rows-fr gap-5 md:grid-cols-2 lg:grid-cols-6">
             {PACKAGES.map((p, i) => (
               <ServiceCard key={p.name} pkg={p} idx={i} />
             ))}

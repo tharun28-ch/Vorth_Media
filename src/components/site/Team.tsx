@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type TeamMember = {
   id: string;
@@ -114,7 +115,7 @@ export function Team() {
   }, []);
 
   React.useEffect(() => {
-    const timer = setInterval(next, 4000);
+    const timer = setInterval(next, 3000);
     return () => clearInterval(timer);
   }, [next]);
 
@@ -138,101 +139,120 @@ export function Team() {
       <div className="team-slider-wrap lg:hidden">
         <div className="relative mx-auto max-w-[340px] sm:max-w-[720px] px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* Card 1 */}
-            <div className="team-card team-card-glow" data-role={teamMembers[currentIndex].role}>
-              <div className="card-img-wrap">
-                <img src={teamMembers[currentIndex].img} alt={teamMembers[currentIndex].name} />
-                <div className="card-nickname" style={{ opacity: 1, transform: 'translateY(0)' }}>
-                  {teamMembers[currentIndex].nickname}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={teamMembers[currentIndex].id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="team-card team-card-glow"
+                data-role={teamMembers[currentIndex].role}
+              >
+                <div className="card-img-wrap">
+                  <img src={teamMembers[currentIndex].img} alt={teamMembers[currentIndex].name} />
+                  <div className="card-nickname" style={{ opacity: 1, transform: 'translateY(0)' }}>
+                    {teamMembers[currentIndex].nickname}
+                  </div>
                 </div>
-              </div>
 
-              <div className="card-body">
-                <span className="role-badge">{teamMembers[currentIndex].roleLabel}</span>
-                <p className="member-name">{teamMembers[currentIndex].name}</p>
-                <p className="member-title">{teamMembers[currentIndex].title}</p>
-                <div className="member-links mt-4">
-                  {teamMembers[currentIndex].linkedin && (
-                    <a
-                      href={teamMembers[currentIndex].linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-link"
-                      aria-label="LinkedIn"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                        <rect x="2" y="9" width="4" height="12" />
-                        <circle cx="4" cy="4" r="2" />
-                      </svg>
-                    </a>
-                  )}
-                  {teamMembers[currentIndex].instagram && (
-                    <a
-                      href={teamMembers[currentIndex].instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-link"
-                      aria-label="Instagram"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                        <circle cx="12" cy="12" r="4" />
-                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                      </svg>
-                    </a>
-                  )}
+                <div className="card-body">
+                  <span className="role-badge">{teamMembers[currentIndex].roleLabel}</span>
+                  <p className="member-name">{teamMembers[currentIndex].name}</p>
+                  <p className="member-title">{teamMembers[currentIndex].title}</p>
+                  <div className="member-links mt-4">
+                    {teamMembers[currentIndex].linkedin && (
+                      <a
+                        href={teamMembers[currentIndex].linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-link"
+                        aria-label="LinkedIn"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                          <rect x="2" y="9" width="4" height="12" />
+                          <circle cx="4" cy="4" r="2" />
+                        </svg>
+                      </a>
+                    )}
+                    {teamMembers[currentIndex].instagram && (
+                      <a
+                        href={teamMembers[currentIndex].instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-link"
+                        aria-label="Instagram"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                          <circle cx="12" cy="12" r="4" />
+                          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
 
             {/* Card 2 (Visible only on sm+) */}
-            <div className="team-card team-card-glow hidden sm:block" data-role={teamMembers[(currentIndex + 1) % teamMembers.length].role}>
-              <div className="card-img-wrap">
-                <img src={teamMembers[(currentIndex + 1) % teamMembers.length].img} alt={teamMembers[(currentIndex + 1) % teamMembers.length].name} />
-                <div className="card-nickname" style={{ opacity: 1, transform: 'translateY(0)' }}>
-                  {teamMembers[(currentIndex + 1) % teamMembers.length].nickname}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={teamMembers[(currentIndex + 1) % teamMembers.length].id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="team-card team-card-glow hidden sm:block"
+                data-role={teamMembers[(currentIndex + 1) % teamMembers.length].role}
+              >
+                <div className="card-img-wrap">
+                  <img src={teamMembers[(currentIndex + 1) % teamMembers.length].img} alt={teamMembers[(currentIndex + 1) % teamMembers.length].name} />
+                  <div className="card-nickname" style={{ opacity: 1, transform: 'translateY(0)' }}>
+                    {teamMembers[(currentIndex + 1) % teamMembers.length].nickname}
+                  </div>
                 </div>
-              </div>
 
-              <div className="card-body">
-                <span className="role-badge">{teamMembers[(currentIndex + 1) % teamMembers.length].roleLabel}</span>
-                <p className="member-name">{teamMembers[(currentIndex + 1) % teamMembers.length].name}</p>
-                <p className="member-title">{teamMembers[(currentIndex + 1) % teamMembers.length].title}</p>
-                <div className="member-links mt-4">
-                  {teamMembers[(currentIndex + 1) % teamMembers.length].linkedin && (
-                    <a
-                      href={teamMembers[(currentIndex + 1) % teamMembers.length].linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-link"
-                      aria-label="LinkedIn"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                        <rect x="2" y="9" width="4" height="12" />
-                        <circle cx="4" cy="4" r="2" />
-                      </svg>
-                    </a>
-                  )}
-                  {teamMembers[(currentIndex + 1) % teamMembers.length].instagram && (
-                    <a
-                      href={teamMembers[(currentIndex + 1) % teamMembers.length].instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-link"
-                      aria-label="Instagram"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                        <circle cx="12" cy="12" r="4" />
-                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                      </svg>
-                    </a>
-                  )}
+                <div className="card-body">
+                  <span className="role-badge">{teamMembers[(currentIndex + 1) % teamMembers.length].roleLabel}</span>
+                  <p className="member-name">{teamMembers[(currentIndex + 1) % teamMembers.length].name}</p>
+                  <p className="member-title">{teamMembers[(currentIndex + 1) % teamMembers.length].title}</p>
+                  <div className="member-links mt-4">
+                    {teamMembers[(currentIndex + 1) % teamMembers.length].linkedin && (
+                      <a
+                        href={teamMembers[(currentIndex + 1) % teamMembers.length].linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-link"
+                        aria-label="LinkedIn"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                          <rect x="2" y="9" width="4" height="12" />
+                          <circle cx="4" cy="4" r="2" />
+                        </svg>
+                      </a>
+                    )}
+                    {teamMembers[(currentIndex + 1) % teamMembers.length].instagram && (
+                      <a
+                        href={teamMembers[(currentIndex + 1) % teamMembers.length].instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-link"
+                        aria-label="Instagram"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                          <circle cx="12" cy="12" r="4" />
+                          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* Navigation */}
@@ -269,8 +289,16 @@ export function Team() {
 
       {/* ── Desktop Grid (visible on lg) ── */}
       <div className="team-grid hidden lg:flex">
-        {teamMembers.map((member) => (
-          <div key={member.id} className="team-card" data-role={member.role}>
+        {teamMembers.map((member, idx) => (
+          <motion.div
+            key={member.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.6, delay: idx * 0.1 }}
+            className="team-card"
+            data-role={member.role}
+          >
             <div className="card-img-wrap">
               <img src={member.img} alt={member.name} />
               <div className="card-nickname">{member.nickname}</div>
@@ -315,7 +343,7 @@ export function Team() {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
