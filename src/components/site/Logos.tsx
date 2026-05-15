@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 
 const LOGOS = [
   { name: "Cosmos Clinique", image: "/logos/cosmos.jpg" },
+  { name: "SS Homeopathy", image: "/logos/SS homeopathy.png" },
   { name: "Genclosers", image: "/logos/genclosers.png" },
   { name: "MH Crafts", image: "/logos/mhcrafts.jpg" },
   { name: "Cosma Academy", image: "/logos/cosmaa.jpeg" },
@@ -51,8 +52,26 @@ export function Logos() {
           </div>
         </div>
 
-        {/* ── Desktop: static grid ── */}
-        <div className="mt-14 hidden flex-wrap items-center justify-center gap-12 sm:flex md:gap-20">
+        {/* ── Tablet: 2x2 Grid (4 brands, excluding Cosma Academy) ── */}
+        <div className="mt-14 hidden grid-cols-2 gap-x-12 gap-y-12 sm:grid lg:hidden max-w-md mx-auto justify-items-center">
+          {LOGOS.slice(0, 4).map((brand, i) => (
+            <div key={brand.name} className="group flex flex-col items-center gap-4">
+              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-surface/60 overflow-hidden transition-all duration-300 group-hover:scale-110 group-hover:border-brand group-hover:shadow-[0_0_30px_rgba(255,45,55,0.2)]">
+                <img
+                  src={brand.image}
+                  alt={brand.name}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-xs font-semibold tracking-widest text-white/60 transition-colors duration-300 group-hover:text-brand">
+                {brand.name.toUpperCase()}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Desktop: Full list (lg+) ── */}
+        <div className="mt-14 hidden flex-wrap items-center justify-center gap-12 lg:flex md:gap-20">
           {LOGOS.map((brand, i) => (
             <motion.div
               key={brand.name}
@@ -60,9 +79,9 @@ export function Logos() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="flex flex-col items-center gap-4"
+              className="group flex flex-col items-center gap-4"
             >
-              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-surface/60 overflow-hidden transition-all duration-300 hover:scale-110 hover:border-brand hover:shadow-[0_0_30px_rgba(255,45,55,0.2)]">
+              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-surface/60 overflow-hidden transition-all duration-300 group-hover:scale-110 group-hover:border-brand group-hover:shadow-[0_0_30px_rgba(255,45,55,0.2)]">
                 {brand.image ? (
                   <img
                     src={brand.image}
@@ -75,7 +94,7 @@ export function Logos() {
                   </span>
                 )}
               </div>
-              <span className="text-xs font-semibold tracking-widest text-white/60">
+              <span className="text-xs font-semibold tracking-widest text-white/60 transition-colors duration-300 group-hover:text-brand">
                 {brand.name.toUpperCase()}
               </span>
             </motion.div>

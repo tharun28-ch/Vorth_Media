@@ -19,9 +19,9 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="relative flex flex-col justify-center bg-brand p-10 md:p-16"
+            className="relative flex h-[50vh] flex-col justify-center bg-brand p-8 md:h-full md:p-16"
           >
-            <ul className="space-y-6">
+            <ul className="space-y-4 md:space-y-6">
               {NAV.map((item) => {
                 const path =
                   item === "Home"
@@ -36,7 +36,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                       <a
                         href={path.slice(1)}
                         onClick={onClose}
-                        className="text-3xl font-bold text-white transition hover:translate-x-2 inline-block"
+                        className="text-2xl font-bold text-white transition hover:translate-x-2 inline-block md:text-3xl"
                       >
                         {item}
                       </a>
@@ -44,7 +44,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                       <Link
                         to={path as "/"}
                         onClick={onClose}
-                        className="text-3xl font-bold text-white transition hover:translate-x-2 inline-block"
+                        className="text-2xl font-bold text-white transition hover:translate-x-2 inline-block md:text-3xl"
                       >
                         {item}
                       </Link>
@@ -53,11 +53,11 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                 );
               })}
             </ul>
-            <div className="absolute bottom-8 left-10 right-10 md:left-16">
-              <p className="text-xs uppercase tracking-widest text-white/80">Follow Us</p>
-              <div className="mt-3 flex gap-4 text-white/90">
+            <div className="absolute bottom-6 left-8 right-8 md:bottom-8 md:left-16">
+              <p className="text-[10px] uppercase tracking-widest text-white/80">Follow Us</p>
+              <div className="mt-2 flex gap-4 text-white/90">
                 {["LinkedIn", "Instagram"].map((s) => (
-                  <a key={s} href="#" className="text-sm hover:text-white">
+                  <a key={s} href="#" className="text-xs hover:text-white md:text-sm">
                     {s}
                   </a>
                 ))}
@@ -71,12 +71,12 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="relative flex flex-col items-center justify-center bg-black p-10 md:p-16 border-l border-white/10"
+            className="relative flex h-[50vh] flex-col items-center justify-center bg-black p-8 md:h-full md:p-16 border-t border-white/10 md:border-t-0 md:border-l"
           >
             <button
               aria-label="Close menu"
               onClick={onClose}
-              className="absolute right-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10"
+              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10 md:right-6 md:top-6"
             >
               <svg
                 width="22"
@@ -89,16 +89,18 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>
             </button>
-            <h3 className="text-3xl font-bold text-white">Got An Idea?</h3>
-            <p className="mt-3 text-white/70">Let's craft your <span className="text-brand">Brand</span> together!</p>
-            <Link
-              to="/contact"
-              onClick={onClose}
-              className="mt-6 rounded-lg bg-brand px-8 py-3.5 font-bold text-white transition hover:bg-white hover:text-black glow-brand"
-            >
-              Get In Touch
-            </Link>
-            <div className="absolute bottom-8 text-center text-sm text-white/60">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-white md:text-3xl">Got An Idea?</h3>
+              <p className="mt-2 text-sm text-white/70 md:mt-3 md:text-base">Let's craft your <span className="text-brand">Brand</span> together!</p>
+              <Link
+                to="/contact"
+                onClick={onClose}
+                className="mt-5 inline-block rounded-lg bg-brand px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-black glow-brand md:mt-6 md:px-8 md:py-3.5 md:text-base"
+              >
+                Get In Touch
+              </Link>
+            </div>
+            <div className="absolute bottom-6 text-center text-[10px] text-white/60 md:bottom-8 md:text-sm">
               India
             </div>
           </motion.div>

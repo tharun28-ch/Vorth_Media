@@ -15,13 +15,13 @@ import { FounderVideo } from "@/components/site/FounderVideo";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vorth Media — Content that Converts" },
+      { title: "Vorth Media Content that Converts" },
       {
         name: "description",
         content:
           "Premium content production and performance marketing agency. We turn knowledge into story, story into brand, brand into revenue.",
       },
-      { property: "og:title", content: "Vorth Media — Content that Converts" },
+      { property: "og:title", content: "Vorth Media Content that Converts" },
       {
         property: "og:description",
         content: "Premium content production and performance marketing agency.",

@@ -6,12 +6,12 @@ import doodleCamera from "@/assets/doodle-camera.png";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Vorth Media" },
+      { title: "Contact Vorth Media" },
       {
         name: "description",
         content: "Get in touch with the Vorth Media team. We typically respond within 24 hours.",
       },
-      { property: "og:title", content: "Contact — Vorth Media" },
+      { property: "og:title", content: "Contact Vorth Media" },
       { property: "og:description", content: "Let's build together. Reach the Vorth Media team." },
     ],
   }),

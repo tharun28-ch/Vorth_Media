@@ -35,7 +35,7 @@ export function MobileStickyCardStack({
       <div className="relative w-full" style={{ minHeight: totalScrollHeight }}>
         {/* Sticky Header Section - Now stays at the top, below the site header */}
         <div 
-          className="sticky z-50 mb-10 px-4 text-center pb-6 pt-4 bg-black/90 backdrop-blur-md"
+          className="sticky z-[100] mb-10 px-4 text-center pb-6 pt-4 bg-black/90 backdrop-blur-md"
           style={{ top: "80px" }}
         >
           {title && <div className="mb-2">{title}</div>}
@@ -49,13 +49,15 @@ export function MobileStickyCardStack({
               <div
                 className="sticky w-full px-5"
                 style={{
-                  // Adjusted top: 80px (site header) + ~90px (stack header) + stack offset
-                  top: `${stickyTopPx + 110 + i * stackOffsetPx}px`,
+                  // Adjusted top: 80px (site header) + ~180px (stack header) + stack offset
+                  top: `${stickyTopPx + 180 + i * stackOffsetPx}px`,
                   zIndex: 10 + i * 10,
                 }}
               >
-                <div className="rounded-[2.5rem] border border-white/10 bg-surface/98 shadow-[0_25px_70px_rgba(0,0,0,0.9)] backdrop-blur-2xl ring-1 ring-white/5 overflow-hidden">
-                  {node}
+                <div className="overflow-hidden min-h-[420px] flex flex-col rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.9)]">
+                  <div className="flex-1 flex flex-col">
+                    {node}
+                  </div>
                 </div>
               </div>
               

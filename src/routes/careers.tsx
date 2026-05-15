@@ -5,13 +5,13 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 export const Route = createFileRoute("/careers")({
   head: () => ({
     meta: [
-      { title: "Careers — Vorth Media" },
+      { title: "Careers Vorth Media" },
       {
         name: "description",
         content:
           "Join Vorth Media. Explore open roles in content production and performance marketing.",
       },
-      { property: "og:title", content: "Careers — Vorth Media" },
+      { property: "og:title", content: "Careers Vorth Media" },
       {
         property: "og:description",
         content:
@@ -71,7 +71,7 @@ function CareersPage() {
             </div>
             <h2 className="text-3xl font-bold md:text-4xl">No open vacancies right now</h2>
             <p className="mt-4 text-white/75">
-              We don't have any active roles at the moment. But great talent never goes unnoticed —
+              We don't have any active roles at the moment. But great talent never goes unnoticed
               drop us a line and we'll reach out the moment something fits.
             </p>
             <a

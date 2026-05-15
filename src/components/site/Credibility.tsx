@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 
 const METRICS = [
   { value: 10, suffix: "L+", label: "Leads Generated" },
-  { value: 10, suffix: "M+", label: "Generated Views" },
+  { value: 30, suffix: "M+", label: "Generated Views" },
   { value: 30, suffix: "L+", label: "Ad Spent" },
   { value: 4, suffix: "x", label: "Avg ROAS" },
 ];

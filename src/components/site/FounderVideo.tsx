@@ -13,7 +13,7 @@ export function FounderVideo() {
           </div>
         </div>
         <p className="mx-auto mt-8 max-w-xl text-lg text-white/85">
-          Our mission is to transform how brands tell their story — and turn that story into
+          Our mission is to transform how brands tell their story and turn that story into
           measurable business results.
         </p>
       </div>

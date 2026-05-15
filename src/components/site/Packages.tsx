@@ -20,6 +20,19 @@ type Pkg = {
 
 const PACKAGES: Pkg[] = [
   {
+    name: "Starter Production",
+    meta: "Consistent content Structured growth 8 Reels 1 Shoot Day 4 Carousels",
+    bullets: [
+      { title: "Monthly strategy session" },
+      { title: "8 scripts written for you" },
+      { title: "Shoot + editing handled" },
+      { title: "Social media fully managed" },
+    ],
+    variant: "red",
+    span: "lg:col-span-3",
+    cta: "Start My Content",
+  },
+  {
     name: "Growth Production",
     meta: "Maximum content Maximum growth 12 Reels 2 Shoot Days 6 Carousels",
     bullets: [
@@ -31,32 +44,6 @@ const PACKAGES: Pkg[] = [
     variant: "dark",
     span: "lg:col-span-3",
     cta: "Scale My Content",
-  },
-  {
-    name: "Starter Production",
-    meta: "Consistent content Structured growth 8 Reels 1 Shoot Day 4 Carousels",
-    bullets: [
-      { title: "Monthly strategy session" },
-      { title: "8 scripts written for you" },
-      { title: "Shoot + editing handled" },
-      { title: "Social media fully managed" },
-    ],
-    variant: "dark",
-    span: "lg:col-span-3",
-    cta: "Start My Content",
-  },
-  {
-    name: "Content Consulting",
-    meta: "Clarity before scale 12 Sessions 3 Months",
-    bullets: [
-      { title: "Weekly 1 on 1 strategy" },
-      { title: "Monthly content planning" },
-      { title: "Script guidance" },
-      { title: "Performance tracking" },
-    ],
-    variant: "red",
-    span: "lg:col-span-2 md:col-span-1",
-    cta: "Get Clarity",
   },
   {
     name: "Custom Growth Plan",
@@ -71,6 +58,19 @@ const PACKAGES: Pkg[] = [
     variant: "dark",
     span: "lg:col-span-2 md:col-span-1",
     cta: "Build My Plan",
+  },
+  {
+    name: "Content Consulting",
+    meta: "Clarity before scale 12 Sessions 3 Months",
+    bullets: [
+      { title: "Weekly 1 on 1 strategy" },
+      { title: "Monthly content planning" },
+      { title: "Script guidance" },
+      { title: "Performance tracking" },
+    ],
+    variant: "dark",
+    span: "lg:col-span-2 md:col-span-1",
+    cta: "Get Clarity",
   },
   {
     name: "Performance Marketing",
@@ -90,7 +90,7 @@ const PACKAGES: Pkg[] = [
 function packageSurfaceClass(pkg: Pkg) {
   const base =
     pkg.variant === "white" ? "bento-white" : pkg.variant === "red" ? "bento-red" : "bento-dark";
-  return `${base} ${pkg.span ?? ""} group relative flex flex-col rounded-2xl p-7 transition md:hover:-translate-y-1`;
+  return `${base} ${pkg.span ?? ""} group relative flex flex-col h-full rounded-2xl p-7 transition md:hover:-translate-y-1`;
 }
 
 function PackageCardBody({ pkg }: { pkg: Pkg }) {
@@ -104,7 +104,7 @@ function PackageCardBody({ pkg }: { pkg: Pkg }) {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      <div className="flex items-start justify-between gap-4">
         <h4 className="text-xl font-bold leading-tight">{pkg.name}</h4>
         {pkg.price && (
           <div className={`rounded-md px-3 py-1.5 sm:text-right w-fit ${priceBox}`}>

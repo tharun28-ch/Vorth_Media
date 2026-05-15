@@ -5,7 +5,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Policies — Vorth Media" },
+      { title: "Terms & Policies Vorth Media" },
       {
         name: "description",
         content: "Terms, conditions, refund policy and disclaimers for Vorth Media services.",
@@ -34,9 +34,9 @@ const SECTIONS = [
       <>
         <p>Vorth Media provides services in the following categories. Each engagement is governed by a Scope of Work Agreement that documents the specific deliverables, timelines, and fees applicable to the Client.</p>
         <ul className="mt-4 list-disc space-y-2 pl-5">
-          <li><strong>Content Consulting</strong> — strategy sessions, content planning, script guidance, and growth accountability.</li>
-          <li><strong>Content Production</strong> — done-for-you scripting, shooting, editing, and social media management.</li>
-          <li><strong>Performance Marketing</strong> — Meta Ads campaign management across Facebook and Instagram.</li>
+          <li><strong>Content Consulting</strong> strategy sessions, content planning, script guidance, and growth accountability.</li>
+          <li><strong>Content Production</strong> done-for-you scripting, shooting, editing, and social media management.</li>
+          <li><strong>Performance Marketing</strong> Meta Ads campaign management across Facebook and Instagram.</li>
         </ul>
         <p className="mt-4">For detailed information about service deliverables and pricing, please contact Vorth Media directly. All service terms are outlined in the Scope of Work Agreement provided to each client before engagement begins.</p>
       </>
@@ -102,7 +102,7 @@ const SECTIONS = [
   },
   {
     id: "consulting",
-    title: "4. Content Consulting — Specific Terms",
+    title: "4. Content Consulting Specific Terms",
     body: (
       <div className="space-y-6">
         <div>
@@ -135,7 +135,7 @@ const SECTIONS = [
   },
   {
     id: "production",
-    title: "5. Content Production — Specific Terms",
+    title: "5. Content Production Specific Terms",
     body: (
       <div className="space-y-6">
         <div>
@@ -167,7 +167,7 @@ const SECTIONS = [
   },
   {
     id: "performance",
-    title: "6. Performance Marketing — Specific Terms",
+    title: "6. Performance Marketing Specific Terms",
     body: (
       <div className="space-y-6">
         <div>

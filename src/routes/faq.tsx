@@ -7,12 +7,12 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — Vorth Media" },
+      { title: "FAQ Vorth Media" },
       {
         name: "description",
         content: "Answers to the most common questions about working with Vorth Media.",
       },
-      { property: "og:title", content: "FAQ — Vorth Media" },
+      { property: "og:title", content: "FAQ Vorth Media" },
       {
         property: "og:description",
         content: "Answers to the most common questions about working with Vorth Media.",
@@ -45,7 +45,7 @@ const FAQS = [
     items: [
       {
         q: "What's included in a retainer?",
-        a: "Strategy, content production (reels, ads, photography), performance media, and monthly reporting — fully managed.",
+        a: "Strategy, content production (reels, ads, photography), performance media, and monthly reporting fully managed.",
       },
       {
         q: "Can I choose only content production or only ads?",
@@ -53,7 +53,7 @@ const FAQS = [
       },
       {
         q: "Do you handle scripting and creative direction?",
-        a: "Yes — every package includes scripting, shot planning, and creative direction. You just show up; we handle the rest.",
+        a: "Yes every package includes scripting, shot planning, and creative direction. You just show up; we handle the rest.",
       },
     ],
   },
@@ -62,7 +62,7 @@ const FAQS = [
     items: [
       {
         q: "Do you guarantee results?",
-        a: "We guarantee craft, communication, and consistency. Performance is a partnership — we share dashboards weekly so you see every number.",
+        a: "We guarantee craft, communication, and consistency. Performance is a partnership we share dashboards weekly so you see every number.",
       },
       {
         q: "How do you measure success?",
@@ -70,7 +70,7 @@ const FAQS = [
       },
       {
         q: "What ROAS can I expect from paid ads?",
-        a: "Our clients have averaged 4x ROAS. Results depend on offer strength, budget, and audience — we'll set realistic benchmarks in your discovery call.",
+        a: "Our clients have averaged 4x ROAS. Results depend on offer strength, budget, and audience we'll set realistic benchmarks in your discovery call.",
       },
     ],
   },

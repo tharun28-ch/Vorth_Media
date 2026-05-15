@@ -6,9 +6,9 @@ import { Logos } from "@/components/site/Logos";
 export const Route = createFileRoute("/works")({
   head: () => ({
     meta: [
-      { title: "Our Works — Vorth Media" },
+      { title: "Our Works Vorth Media" },
       { name: "description", content: "Selected case studies and brand work from Vorth Media." },
-      { property: "og:title", content: "Our Works — Vorth Media" },
+      { property: "og:title", content: "Our Works Vorth Media" },
       {
         property: "og:description",
         content: "Selected case studies and brand work from Vorth Media.",

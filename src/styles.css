@@ -199,3 +199,263 @@
 .marquee {
   animation: marquee 35s linear infinite;
 }
+
+/* ── Team Section Styles ── */
+.team-section {
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.team-heading {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.team-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 0;
+}
+
+.team-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.team-subtitle {
+  font-size: 1rem;
+  color: #888;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+  .team-grid {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .team-card {
+    flex: 0 0 calc(25% - 1.125rem);
+  }
+  
+  .team-card:nth-child(1) { margin-top: 0.6rem; }
+  .team-card:nth-child(2) { margin-top: 2.2rem; }
+  .team-card:nth-child(3) { margin-top: 2.2rem; }
+  .team-card:nth-child(4) { margin-top: 0.6rem; }
+  .team-card:nth-child(5) { margin-top: 0.6rem; }
+  .team-card:nth-child(6) { margin-top: 2.2rem; }
+  .team-card:nth-child(7) { margin-top: 0.6rem; }
+}
+
+@media (max-width: 1024px) {
+  .team-card {
+    flex: 0 0 calc(33.333% - 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .team-card {
+    flex: 0 0 calc(50% - 0.75rem);
+  }
+  .team-card:nth-child(n) {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .team-card {
+    flex: 0 0 100%;
+  }
+}
+
+
+
+/* ── Card base ── */
+.team-card {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #0f0f0f;
+  border: 1.5px solid #1e1e1e;
+  transition:
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.38s ease,
+    border-color 0.38s ease,
+    filter 0.38s ease;
+}
+
+.team-card[data-role="strategy"] { --accent: #3b82f6; }
+.team-card[data-role="growth"]   { --accent: #22c55e; }
+.team-card[data-role="tech"]     { --accent: #a855f7; }
+.team-card[data-role="content"]  { --accent: #f97316; }
+.team-card[data-role="editor"]   { --accent: #EDBD41; }
+
+.team-card-glow,
+.team-card:hover {
+  transform: translateY(-8px) scale(1.025);
+  filter: brightness(1.1);
+  border-color: var(--accent, #333);
+  box-shadow:
+    0 0 0 1px var(--accent, transparent),
+    0 16px 48px -12px var(--accent, rgba(255,255,255,0.08));
+}
+
+.card-img-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.card-img-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-card:hover .card-img-wrap img {
+  transform: scale(1.07);
+}
+
+.card-nickname {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.6rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent, #fff);
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+.team-card:hover .card-nickname {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-body {
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+
+@media (min-width: 769px) {
+  .card-body {
+    padding: 0.85rem 1rem 1rem;
+  }
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent, #aaa);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.team-card:hover .role-badge {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.member-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.15rem;
+  line-height: 1.2;
+}
+
+.member-title {
+  font-size: 0.78rem;
+  color: #666;
+  margin: 0 0 0.6rem;
+  font-weight: 500;
+}
+
+.member-bio {
+  font-size: 0.75rem;
+  color: #888;
+  line-height: 1.5;
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.team-card:hover .member-bio {
+  max-height: 100px;
+  opacity: 1;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 1023px) {
+  .member-bio {
+    display: none !important;
+  }
+}
+
+.member-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #888;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.social-link:hover {
+  color: var(--accent, #fff);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}

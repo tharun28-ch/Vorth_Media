@@ -1,234 +1,323 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Linkedin, Instagram, ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
 
-const TEAM = [
-  { nickname: "The Architect", name: "Monish Aravind", role: "Founder & CEO", initials: "MA", image: "/team/member1.png", linkedin: "https://www.linkedin.com/", instagram: "https://www.instagram.com/", bio: "Monish leads brand strategy and growth roadmaps for every Vorth client He blends storytelling with sharp business thinking to align brand and revenue from day one" },
-  { nickname: "The Growth Engine", name: "Kumaran", role: "Marketing Head", initials: "K", image: "/team/member2.png", linkedin: "https://www.linkedin.com/", bio: "Kumaran owns performance marketing and full funnel scaling He's obsessed with creative led growth and treats every campaign like it's his own legacy" },
-  { nickname: "The System Builder", name: "Shashank", role: "Tech Head", initials: "SH", image: "/team/member4.png", linkedin: "https://www.linkedin.com/", bio: "Shashank architects the tech backbone behind every Vorth system from automation pipelines to digital infrastructure that keeps everything running at scale" },
-  { nickname: "The Story Engine", name: "Sanjai Suresh", role: "Content Production Head", initials: "SS", image: "/team/member3.png", linkedin: "https://www.linkedin.com/", bio: "Sanjai runs end to end production and the creative supply chain He turns ambitious ideas into shipped work with calm execution and zero drama" },
-  { nickname: "The Cut Master", name: "Vaishnavi", role: "Lead Editor", initials: "V", image: "/team/member5.png", linkedin: "https://www.linkedin.com/", bio: "Vaishnavi brings every frame to life with precision editing and a sharp eye for pacing She ensures every piece of content feels polished and scroll stopping" },
-  { nickname: "The Frame Shaper", name: "Hemanth", role: "Lead Editor", initials: "H", image: "/team/member6.png", linkedin: "https://www.linkedin.com/", bio: "Hemanth crafts cinematic edits that elevate raw footage into compelling narratives His attention to rhythm and detail makes every deliverable hit different" },
+type TeamMember = {
+  id: string;
+  role: string;
+  roleLabel: string;
+  nickname: string;
+  initials: string;
+  name: string;
+  title: string;
+  bio: string;
+  img: string;
+  linkedin?: string;
+  instagram?: string;
+};
+
+const teamMembers: TeamMember[] = [
+  {
+    id: "monish",
+    role: "strategy",
+    roleLabel: "Strategy",
+    nickname: "The Architect",
+    initials: "MA",
+    name: "Monish Aravind",
+    title: "Founder & CEO",
+    bio: "Monish leads brand strategy and growth roadmaps for every Vorth client. He blends storytelling with sharp business thinking to align brand and revenue from day one.",
+    img: "/team/member1.jpg",
+    linkedin: "https://www.linkedin.com/",
+    instagram: "https://www.instagram.com/",
+  },
+  {
+    id: "kumaran",
+    role: "growth",
+    roleLabel: "Growth",
+    nickname: "The Growth Engine",
+    initials: "K",
+    name: "Kumaran",
+    title: "Marketing Head",
+    bio: "Kumaran owns performance marketing and full funnel scaling. He's obsessed with creative-led growth and treats every campaign like it's his own legacy.",
+    img: "/team/member2.jpg",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    id: "sanjai",
+    role: "content",
+    roleLabel: "Content",
+    nickname: "The Story Engine",
+    initials: "SS",
+    name: "Sanjai Suresh",
+    title: "Content Production Head",
+    bio: "Sanjai runs end-to-end production and the creative supply chain. He turns ambitious ideas into shipped work with calm execution and zero drama.",
+    img: "/team/member3.jpg",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    id: "shashank",
+    role: "tech",
+    roleLabel: "Tech",
+    nickname: "The System Builder",
+    initials: "SH",
+    name: "Shashank",
+    title: "Tech Head",
+    bio: "Shashank architects the tech backbone behind every Vorth system from automation pipelines to digital infrastructure that keeps everything running at scale.",
+    img: "/team/member4.jpg",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    id: "vaishnavi",
+    role: "editor",
+    roleLabel: "Editors",
+    nickname: "The Cut Master",
+    initials: "V",
+    name: "Vaishnavi",
+    title: "Lead Editor",
+    bio: "Vaishnavi brings every frame to life with precision editing and a sharp eye for pacing. She ensures every piece of content feels polished and scroll-stopping.",
+    img: "/team/member5.jpg",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    id: "tharun",
+    role: "tech",
+    roleLabel: "Tech",
+    nickname: "The Design Engineer",
+    initials: "T",
+    name: "Tharun",
+    title: "Tech Product Designer",
+    bio: "Tharun bridges the gap between high-end aesthetics and technical feasibility. He builds design systems and digital interfaces that feel as good as they look.",
+    img: "/team/member7jpg.jpg",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    id: "hemanth",
+    role: "editor",
+    roleLabel: "Editors",
+    nickname: "The Frame Shaper",
+    initials: "H",
+    name: "Hemanth",
+    title: "Lead Editor",
+    bio: "Hemanth crafts cinematic edits that elevate raw footage into compelling narratives. His attention to rhythm and detail makes every deliverable hit different.",
+    img: "/team/member6.jpg",
+    linkedin: "https://www.linkedin.com/",
+  },
 ];
 
-const SLIDE_DURATION = 2000; // ms per slide
-
-function SocialLinks({ member }: { member: (typeof TEAM)[0] }) {
-  return (
-    <div className="mt-4 flex items-center gap-3">
-      {member.linkedin && (
-        <a
-          href={member.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${member.name} on LinkedIn`}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:scale-110"
-        >
-          <Linkedin className="h-4 w-4" />
-        </a>
-      )}
-      {member.instagram && (
-        <a
-          href={member.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${member.name} on Instagram`}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:scale-110"
-        >
-          <Instagram className="h-4 w-4" />
-        </a>
-      )}
-    </div>
-  );
-}
-
 export function Team() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  // key to reset the progress-bar CSS animation on each slide
-  const [barKey, setBarKey] = useState(0);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  const goTo = useCallback((idx: number) => {
-    setCurrentIndex(idx);
-    setBarKey((k) => k + 1);
+  const next = React.useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % teamMembers.length);
   }, []);
 
-  const next = useCallback(() => {
-    goTo((currentIndex + 1) % TEAM.length);
-  }, [currentIndex, goTo]);
+  const prev = React.useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + teamMembers.length) % teamMembers.length);
+  }, []);
 
-  const prev = useCallback(() => {
-    goTo((currentIndex - 1 + TEAM.length) % TEAM.length);
-  }, [currentIndex, goTo]);
-
-  // Auto-advance
-  useEffect(() => {
-    if (paused) return;
-    const id = setTimeout(next, SLIDE_DURATION);
-    return () => clearTimeout(id);
-  }, [currentIndex, paused, next]);
-
-  const m = TEAM[currentIndex];
+  React.useEffect(() => {
+    const timer = setInterval(next, 4000);
+    return () => clearInterval(timer);
+  }, [next]);
 
   return (
-    <section className="bg-black py-16 md:py-28 text-white">
-      <div className="container-x">
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-brand">
-            <span className="h-px w-8 bg-brand" />
-            The Crew
-            <span className="h-px w-8 bg-brand" />
-          </div>
-          <h2 className="text-4xl font-bold md:text-5xl">
-            Built by people who <span className="text-brand">obsess</span> over the craft.
-          </h2>
-          <p className="mt-4 text-white/60">
-            Six minds one studio Strategy tech story design and performance under one roof
-          </p>
+    <section id="team" className="team-section">
+      <div className="team-heading">
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="h-px w-10 bg-brand/60" />
+          <p className="team-eyebrow mb-0">The Crew</p>
+          <div className="h-px w-10 bg-brand/60" />
         </div>
+        <h2 className="team-title">
+          Built by people who <span className="text-brand">obsess</span> over the craft.
+        </h2>
+        <p className="team-subtitle">
+          Seven minds one studio Strategy tech story design and performance under one roof
+        </p>
+      </div>
 
-        {/* ── Mobile: Auto-Slideshow ── */}
-        <div
-          className="mx-auto mt-12 block max-w-sm sm:hidden"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => setPaused(false)}
-        >
-          {/* Progress bar */}
-          <div className="mb-3 h-[2px] w-full overflow-hidden rounded-full bg-white/10">
-            <div
-              key={barKey}
-              className="h-full rounded-full bg-brand"
-              style={{
-                animation: paused
-                  ? "none"
-                  : `team-progress ${SLIDE_DURATION}ms linear forwards`,
-              }}
-            />
+      {/* ── Mobile/Tablet Slider (hidden on lg) ── */}
+      <div className="team-slider-wrap lg:hidden">
+        <div className="relative mx-auto max-w-[340px] sm:max-w-[720px] px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {/* Card 1 */}
+            <div className="team-card team-card-glow" data-role={teamMembers[currentIndex].role}>
+              <div className="card-img-wrap">
+                <img src={teamMembers[currentIndex].img} alt={teamMembers[currentIndex].name} />
+                <div className="card-nickname" style={{ opacity: 1, transform: 'translateY(0)' }}>
+                  {teamMembers[currentIndex].nickname}
+                </div>
+              </div>
+
+              <div className="card-body">
+                <span className="role-badge">{teamMembers[currentIndex].roleLabel}</span>
+                <p className="member-name">{teamMembers[currentIndex].name}</p>
+                <p className="member-title">{teamMembers[currentIndex].title}</p>
+                <div className="member-links mt-4">
+                  {teamMembers[currentIndex].linkedin && (
+                    <a
+                      href={teamMembers[currentIndex].linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link"
+                      aria-label="LinkedIn"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect x="2" y="9" width="4" height="12" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
+                    </a>
+                  )}
+                  {teamMembers[currentIndex].instagram && (
+                    <a
+                      href={teamMembers[currentIndex].instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link"
+                      aria-label="Instagram"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 (Visible only on sm+) */}
+            <div className="team-card team-card-glow hidden sm:block" data-role={teamMembers[(currentIndex + 1) % teamMembers.length].role}>
+              <div className="card-img-wrap">
+                <img src={teamMembers[(currentIndex + 1) % teamMembers.length].img} alt={teamMembers[(currentIndex + 1) % teamMembers.length].name} />
+                <div className="card-nickname" style={{ opacity: 1, transform: 'translateY(0)' }}>
+                  {teamMembers[(currentIndex + 1) % teamMembers.length].nickname}
+                </div>
+              </div>
+
+              <div className="card-body">
+                <span className="role-badge">{teamMembers[(currentIndex + 1) % teamMembers.length].roleLabel}</span>
+                <p className="member-name">{teamMembers[(currentIndex + 1) % teamMembers.length].name}</p>
+                <p className="member-title">{teamMembers[(currentIndex + 1) % teamMembers.length].title}</p>
+                <div className="member-links mt-4">
+                  {teamMembers[(currentIndex + 1) % teamMembers.length].linkedin && (
+                    <a
+                      href={teamMembers[(currentIndex + 1) % teamMembers.length].linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link"
+                      aria-label="LinkedIn"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect x="2" y="9" width="4" height="12" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
+                    </a>
+                  )}
+                  {teamMembers[(currentIndex + 1) % teamMembers.length].instagram && (
+                    <a
+                      href={teamMembers[(currentIndex + 1) % teamMembers.length].instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link"
+                      aria-label="Instagram"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Slide */}
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-black">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={m.name}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.22, ease: "easeInOut" }}
-                className="absolute inset-0"
-              >
-                {/* Nickname badge */}
-                <div className="absolute left-4 top-4 z-20 inline-flex items-center rounded-full border border-white/15 bg-black/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white/80 backdrop-blur-sm">
-                  {m.nickname}
-                </div>
-
-                {/* Fallback initials */}
-                <div className="absolute inset-0 flex items-center justify-center bg-neutral-900 text-7xl font-bold tracking-tighter text-white/20">
-                  {m.initials}
-                </div>
-
-                {/* Photo */}
-                <img
-                  src={m.image}
-                  alt={m.name}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-
-                {/* Name / role overlay */}
-                <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/80 to-transparent p-5 pt-16">
-                  <div className="text-xl font-bold text-white">{m.name}</div>
-                  <div className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">{m.role}</div>
-                  <p className="mt-2 text-sm leading-relaxed text-white/75">{m.bio}</p>
-                  <SocialLinks member={m} />
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Controls + dots */}
-          <div className="mt-5 flex items-center justify-between gap-2">
+          {/* Navigation */}
+          <div className="mt-8 flex items-center justify-center gap-6">
             <button
               onClick={prev}
-              aria-label="Previous team member"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface transition hover:bg-white hover:text-black"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-surface/80 transition active:scale-95"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
             </button>
-
-            <div className="flex items-center gap-2">
-              {TEAM.map((_, i) => (
-                <button
+            <div className="flex gap-1.5">
+              {teamMembers.map((_, i) => (
+                <div
                   key={i}
-                  aria-label={`Go to slide ${i + 1}`}
-                  onClick={() => goTo(i)}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === currentIndex
-                      ? "w-6 bg-brand"
-                      : "w-1.5 bg-white/30 hover:bg-white/60"
+                    i === currentIndex ? "w-4 bg-brand" : "w-1.5 bg-white/20"
                   }`}
                 />
               ))}
             </div>
-
             <button
               onClick={next}
-              aria-label="Next team member"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface transition hover:bg-white hover:text-black"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-surface/80 transition active:scale-95"
             >
-              <ChevronRight className="h-5 w-5" />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
             </button>
           </div>
         </div>
-
-        {/* ── Desktop: Grid ── */}
-        <div className="mx-auto mt-16 hidden max-w-6xl grid-cols-1 gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-          {TEAM.map((member, i) => (
-            <motion.div
-              key={member.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-              className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-black"
-            >
-              <div className="absolute left-4 top-4 z-20 inline-flex items-center rounded-full border border-white/15 bg-black/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white/80 backdrop-blur-sm">
-                {member.nickname}
-              </div>
-
-              <div className="absolute inset-0 flex items-center justify-center bg-neutral-900 text-7xl font-bold tracking-tighter text-white/20">
-                {member.initials}
-              </div>
-              <img
-                src={member.image}
-                alt={member.name}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent p-5 pt-16 transition-opacity duration-300 group-hover:opacity-0">
-                <div className="text-xl font-bold text-white">{member.name}</div>
-                <div className="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">{member.role}</div>
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 z-10 flex translate-y-full flex-col justify-end bg-black p-6 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0">
-                <div className="text-xl font-bold text-white">{member.name}</div>
-                <div className="mb-3 text-[11px] uppercase tracking-[0.2em] text-white/60">{member.role}</div>
-                <p className="text-sm leading-relaxed text-white/85">{member.bio}</p>
-                <SocialLinks member={member} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
 
-      {/* Progress bar keyframe */}
-      <style>{`
-        @keyframes team-progress {
-          from { width: 0%; }
-          to   { width: 100%; }
-        }
-      `}</style>
+      {/* ── Desktop Grid (visible on lg) ── */}
+      <div className="team-grid hidden lg:flex">
+        {teamMembers.map((member) => (
+          <div key={member.id} className="team-card" data-role={member.role}>
+            <div className="card-img-wrap">
+              <img src={member.img} alt={member.name} />
+              <div className="card-nickname">{member.nickname}</div>
+            </div>
+
+            <div className="card-body">
+              <span className="role-badge">{member.roleLabel}</span>
+              <p className="member-name">{member.name}</p>
+              <p className="member-title">{member.title}</p>
+              <p className="member-bio">{member.bio}</p>
+
+              <div className="member-links">
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                    aria-label="LinkedIn"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect x="2" y="9" width="4" height="12" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                  </a>
+                )}
+                {member.instagram && (
+                  <a
+                    href={member.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                    aria-label="Instagram"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                      <circle cx="12" cy="12" r="4" />
+                      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

@@ -28,14 +28,14 @@ const ITEMS: Item[] = [
     span: "md:col-span-2",
   },
   {
-    t: "High-Intent Content",
-    d: "Every piece we produce is built around one question: will this bring the right client closer?",
+    t: "High Intent Content",
+    d: "Every piece we produce is built around one single question, will this bring the right high quality client closer? We focus on strategic storytelling that attracts your dream customers.",
     variant: "dark",
     span: "md:col-span-2",
   },
   {
     t: "Systems Not Chaos",
-    d: "Batch scripting and planned delivery keep your page consistent without you chasing us",
+    d: "Batch scripting and planned production schedules keep your page active and consistent without you ever having to chase us. We handle the logistical chaos so you can stay focused.",
     variant: "red",
   },
 ];
@@ -43,7 +43,7 @@ const ITEMS: Item[] = [
 function whySurfaceClass(it: Item) {
   const base =
     it.variant === "white" ? "bento-white" : it.variant === "red" ? "bento-red" : "bento-dark";
-  return `${base} ${it.span ?? ""} rounded-2xl p-8 transition md:hover:-translate-y-1`;
+  return `${base} ${it.span ?? ""} flex flex-col justify-center h-full rounded-2xl p-8 transition md:hover:-translate-y-1`;
 }
 
 function WhyCardBody({ it }: { it: Item }) {
