@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Team } from "@/components/site/Team";
 import { WhyVorth } from "@/components/site/WhyVorth";
-import { FounderVideo } from "@/components/site/FounderVideo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -42,7 +41,6 @@ function AboutPage() {
       </section>
       <WhyVorth />
       <Team />
-      <FounderVideo />
     </SiteLayout>
   );
 }

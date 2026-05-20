@@ -20,19 +20,6 @@ type Pkg = {
 
 const PACKAGES: Pkg[] = [
   {
-    name: "Starter Production",
-    meta: "Consistent content Structured growth 8 Reels 1 Shoot Day 4 Carousels",
-    bullets: [
-      { title: "Monthly strategy session" },
-      { title: "8 scripts written for you" },
-      { title: "Shoot + editing handled" },
-      { title: "Social media fully managed" },
-    ],
-    variant: "red",
-    span: "lg:col-span-3",
-    cta: "Start My Content",
-  },
-  {
     name: "Growth Production",
     meta: "Maximum content Maximum growth 12 Reels 2 Shoot Days 6 Carousels",
     bullets: [
@@ -41,9 +28,46 @@ const PACKAGES: Pkg[] = [
       { title: "Full shoot + editing handled" },
       { title: "Social media fully managed" },
     ],
-    variant: "dark",
-    span: "lg:col-span-3",
+    variant: "red",
+    span: "md:col-span-2",
     cta: "Scale My Content",
+  },
+  {
+    name: "Starter Production",
+    meta: "Consistent content Structured growth 8 Reels 1 Shoot Day 4 Carousels",
+    bullets: [
+      { title: "Monthly strategy session" },
+      { title: "8 scripts written for you" },
+      { title: "Shoot + editing handled" },
+      { title: "Social media fully managed" },
+    ],
+    variant: "white",
+    cta: "Start My Content",
+  },
+  {
+    name: "Content Consulting",
+    meta: "Clarity before scale 12 Sessions 3 Months",
+    bullets: [
+      { title: "Weekly 1 on 1 strategy" },
+      { title: "Monthly content planning" },
+      { title: "Script guidance" },
+      { title: "Performance tracking" },
+    ],
+    variant: "dark",
+    cta: "Get Clarity",
+  },
+  {
+    name: "Accelerator Production",
+    meta: "Maximum content Maximum growth 12 Reels 2 Shoot Days 6 Carousels",
+    bullets: [
+      { title: "2 monthly strategy calls" },
+      { title: "10 scripts written for you" },
+      { title: "Full shoot + editing handled" },
+      { title: "Social media fully managed" },
+    ],
+    variant: "white",
+    span: "md:col-span-2",
+    cta: "Accelerate My Content",
   },
   {
     name: "Custom Growth Plan",
@@ -56,21 +80,8 @@ const PACKAGES: Pkg[] = [
       { title: "Dedicated support" },
     ],
     variant: "dark",
-    span: "lg:col-span-2 md:col-span-1",
+    span: "md:col-span-2",
     cta: "Build My Plan",
-  },
-  {
-    name: "Content Consulting",
-    meta: "Clarity before scale 12 Sessions 3 Months",
-    bullets: [
-      { title: "Weekly 1 on 1 strategy" },
-      { title: "Monthly content planning" },
-      { title: "Script guidance" },
-      { title: "Performance tracking" },
-    ],
-    variant: "dark",
-    span: "lg:col-span-2 md:col-span-1",
-    cta: "Get Clarity",
   },
   {
     name: "Performance Marketing",
@@ -82,7 +93,6 @@ const PACKAGES: Pkg[] = [
       { title: "Performance reporting" },
     ],
     variant: "red",
-    span: "lg:col-span-2 md:col-span-2",
     cta: "Scale With Ads",
   },
 ];
@@ -187,7 +197,7 @@ export function Packages() {
           className="md:hidden"
         />
 
-        <div className="mt-14 hidden auto-rows-fr gap-5 md:grid md:grid-cols-2 lg:grid-cols-6">
+        <div className="mx-auto mt-14 hidden max-w-5xl auto-rows-fr gap-5 md:grid md:grid-cols-3">
           {PACKAGES.map((p, i) => (
             <Card key={p.name} pkg={p} idx={i} />
           ))}

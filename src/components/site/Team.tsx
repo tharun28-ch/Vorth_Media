@@ -105,6 +105,7 @@ const teamMembers: TeamMember[] = [
 
 export function Team() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [tappedId, setTappedId] = React.useState<string | null>(null);
 
   const next = React.useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % teamMembers.length);
@@ -114,10 +115,21 @@ export function Team() {
     setCurrentIndex((prev) => (prev - 1 + teamMembers.length) % teamMembers.length);
   }, []);
 
+  // Auto-play pauses when a card is tapped (bio is showing)
   React.useEffect(() => {
+    if (tappedId) return; // Don't auto-advance while bio is open
     const timer = setInterval(next, 3000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, tappedId]);
+
+  // When index changes, close any open bio
+  React.useEffect(() => {
+    setTappedId(null);
+  }, [currentIndex]);
+
+  const handleCardTap = (memberId: string) => {
+    setTappedId((prev) => (prev === memberId ? null : memberId));
+  };
 
   return (
     <section id="team" className="team-section">
@@ -148,6 +160,7 @@ export function Team() {
                 transition={{ duration: 0.4 }}
                 className="team-card team-card-glow"
                 data-role={teamMembers[currentIndex].role}
+                onClick={() => handleCardTap(teamMembers[currentIndex].id)}
               >
                 <div className="card-img-wrap">
                   <img src={teamMembers[currentIndex].img} alt={teamMembers[currentIndex].name} />
@@ -160,7 +173,17 @@ export function Team() {
                   <span className="role-badge">{teamMembers[currentIndex].roleLabel}</span>
                   <p className="member-name">{teamMembers[currentIndex].name}</p>
                   <p className="member-title">{teamMembers[currentIndex].title}</p>
-                  <div className="member-links mt-4">
+                  {/* Tap-to-reveal bio */}
+                  <div
+                    className="overflow-hidden transition-all duration-400 ease-in-out"
+                    style={{
+                      maxHeight: tappedId === teamMembers[currentIndex].id ? '120px' : '0px',
+                      opacity: tappedId === teamMembers[currentIndex].id ? 1 : 0,
+                    }}
+                  >
+                    <p className="text-[0.78rem] text-[#888] leading-relaxed mt-2 mb-3">{teamMembers[currentIndex].bio}</p>
+                  </div>
+                  <div className="member-links mt-2">
                     {teamMembers[currentIndex].linkedin && (
                       <a
                         href={teamMembers[currentIndex].linkedin}
@@ -168,6 +191,7 @@ export function Team() {
                         rel="noopener noreferrer"
                         className="social-link"
                         aria-label="LinkedIn"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -183,6 +207,7 @@ export function Team() {
                         rel="noopener noreferrer"
                         className="social-link"
                         aria-label="Instagram"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -192,6 +217,10 @@ export function Team() {
                       </a>
                     )}
                   </div>
+                  {/* Tap hint */}
+                  <p className="text-[0.65rem] text-white/30 mt-2 text-center">
+                    {tappedId === teamMembers[currentIndex].id ? "Tap to close" : "Tap to read bio"}
+                  </p>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -206,6 +235,7 @@ export function Team() {
                 transition={{ duration: 0.4, delay: 0.1 }}
                 className="team-card team-card-glow hidden sm:block"
                 data-role={teamMembers[(currentIndex + 1) % teamMembers.length].role}
+                onClick={() => handleCardTap(teamMembers[(currentIndex + 1) % teamMembers.length].id)}
               >
                 <div className="card-img-wrap">
                   <img src={teamMembers[(currentIndex + 1) % teamMembers.length].img} alt={teamMembers[(currentIndex + 1) % teamMembers.length].name} />
@@ -218,7 +248,17 @@ export function Team() {
                   <span className="role-badge">{teamMembers[(currentIndex + 1) % teamMembers.length].roleLabel}</span>
                   <p className="member-name">{teamMembers[(currentIndex + 1) % teamMembers.length].name}</p>
                   <p className="member-title">{teamMembers[(currentIndex + 1) % teamMembers.length].title}</p>
-                  <div className="member-links mt-4">
+                  {/* Tap-to-reveal bio */}
+                  <div
+                    className="overflow-hidden transition-all duration-400 ease-in-out"
+                    style={{
+                      maxHeight: tappedId === teamMembers[(currentIndex + 1) % teamMembers.length].id ? '120px' : '0px',
+                      opacity: tappedId === teamMembers[(currentIndex + 1) % teamMembers.length].id ? 1 : 0,
+                    }}
+                  >
+                    <p className="text-[0.78rem] text-[#888] leading-relaxed mt-2 mb-3">{teamMembers[(currentIndex + 1) % teamMembers.length].bio}</p>
+                  </div>
+                  <div className="member-links mt-2">
                     {teamMembers[(currentIndex + 1) % teamMembers.length].linkedin && (
                       <a
                         href={teamMembers[(currentIndex + 1) % teamMembers.length].linkedin}
@@ -226,6 +266,7 @@ export function Team() {
                         rel="noopener noreferrer"
                         className="social-link"
                         aria-label="LinkedIn"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -241,6 +282,7 @@ export function Team() {
                         rel="noopener noreferrer"
                         className="social-link"
                         aria-label="Instagram"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -250,6 +292,9 @@ export function Team() {
                       </a>
                     )}
                   </div>
+                  <p className="text-[0.65rem] text-white/30 mt-2 text-center">
+                    {tappedId === teamMembers[(currentIndex + 1) % teamMembers.length].id ? "Tap to close" : "Tap to read bio"}
+                  </p>
                 </div>
               </motion.div>
             </AnimatePresence>

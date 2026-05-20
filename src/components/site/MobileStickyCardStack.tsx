@@ -23,7 +23,7 @@ export function MobileStickyCardStack({
   className,
   stickyTopPx = 70,
   stackOffsetPx = 8,
-  scrollBufferVh = 80,
+  scrollBufferVh = 100,
 }: MobileStickyCardStackProps) {
   if (cards.length === 0) return null;
 

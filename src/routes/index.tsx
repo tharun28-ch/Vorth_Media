@@ -9,7 +9,6 @@ import { Packages } from "@/components/site/Packages";
 import { USP } from "@/components/site/USP";
 import { WhyVorth } from "@/components/site/WhyVorth";
 import { Team } from "@/components/site/Team";
-import { FounderVideo } from "@/components/site/FounderVideo";
 
 
 export const Route = createFileRoute("/")({
@@ -41,7 +40,6 @@ function Index() {
       <Packages />
 
       <USP />
-      <FounderVideo />
       <WhyVorth />
       <Team />
 
