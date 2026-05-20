@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, type ReactNode } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type MobileStickyCardStackProps = {
@@ -8,6 +8,12 @@ type MobileStickyCardStackProps = {
   /** Optional description for the section */
   description?: ReactNode;
   className?: string;
+  /** Top position for the sticky elements, in px */
+  stickyTopPx?: number;
+  /** Vertical offset between stacked cards, in px */
+  stackOffsetPx?: number;
+  /** Scroll distance required to 'stack' each card */
+  scrollBufferVh?: number;
 };
 
 export function MobileStickyCardStack({
@@ -15,109 +21,64 @@ export function MobileStickyCardStack({
   title,
   description,
   className,
+  stickyTopPx = 70,
+  stackOffsetPx = 8,
+  scrollBufferVh = 100,
 }: MobileStickyCardStackProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-
-      // scrolled = how many px we've scrolled INTO the container from the top
-      const scrolled = -rect.top;
-
-      if (scrolled < 0) {
-        setActiveIndex(0);
-        return;
-      }
-
-      // Each card occupies exactly viewportH px of scroll space → 1 swipe = 1 card
-      const idx = Math.min(
-        Math.floor(scrolled / viewportH),
-        cards.length - 1
-      );
-      setActiveIndex(idx);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // run on mount in case already scrolled
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [cards.length]);
-
   if (cards.length === 0) return null;
 
+  // Calculate total height: each card adds a significant scrollable distance.
+  const totalScrollHeight = `${(cards.length - 1) * scrollBufferVh + 100}vh`;
+
   return (
-    <div
-      ref={containerRef}
-      className={cn("md:hidden", className)}
-      // Total scroll distance = cards.length full viewports
-      style={{ height: `${cards.length * 100}vh` }}
-    >
-      {/* Sticky window — stays 100vh tall while the outer container scrolls */}
-      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+    <div className={cn("md:hidden", className)}>
+      <div className="relative w-full" style={{ minHeight: totalScrollHeight }}>
+        {/* Sticky Header Section - Now stays at the top, below the site header */}
+        <div 
+          className="sticky z-[100] mb-10 px-4 text-center pb-6 pt-4 bg-black/90 backdrop-blur-md"
+          style={{ top: "80px" }}
+        >
+          {title && <div className="mb-2">{title}</div>}
+          {description && <div className="text-[13px] leading-relaxed text-white/70">{description}</div>}
+        </div>
 
-        {/* ── Section header ── */}
-        {(title || description) && (
-          <div
-            className="shrink-0 z-10 px-4 pt-4 pb-3 text-center bg-black/90 backdrop-blur-md border-b border-white/5"
-            style={{ marginTop: "80px" }} // below site header
-          >
-            {title && <div className="mb-1">{title}</div>}
-            {description && (
-              <div className="text-[13px] leading-relaxed text-white/70">{description}</div>
-            )}
-          </div>
-        )}
-
-        {/* ── Card stage ── */}
-        <div className="relative flex-1 px-5 py-4">
-          {cards.map((card, i) => {
-            const isCurrent = i === activeIndex;
-            const isPast = i < activeIndex;
-
-            return (
+        <div className="relative">
+          {cards.map((node, i) => (
+            <Fragment key={i}>
+              {/* The sticky card - Acts as a snap point */}
               <div
-                key={i}
-                aria-hidden={!isCurrent}
-                className="absolute inset-x-5 top-4 bottom-4 overflow-hidden rounded-2xl
-                           shadow-[0_25px_70px_rgba(0,0,0,0.9)]
-                           transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                className="sticky w-full px-5 snap-start"
                 style={{
-                  opacity: isCurrent ? 1 : 0,
-                  transform: isCurrent
-                    ? "translateY(0) scale(1)"
-                    : isPast
-                    ? "translateY(-28px) scale(0.97)"
-                    : "translateY(48px) scale(0.97)",
-                  pointerEvents: isCurrent ? "auto" : "none",
-                  zIndex: isCurrent ? 10 : 0,
+                  // Adjusted top: 80px (site header) + ~180px (stack header) + stack offset
+                  top: `${stickyTopPx + 180 + i * stackOffsetPx}px`,
+                  zIndex: 10 + i * 10,
+                  scrollMarginTop: `${stickyTopPx + 180 + i * stackOffsetPx}px`,
                 }}
               >
-                {/* inner scroll in case card content is tall */}
-                <div className="h-full overflow-y-auto">{card}</div>
+                <div className="overflow-hidden min-h-[420px] flex flex-col rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.9)]">
+                  <div className="flex-1 flex flex-col">
+                    {node}
+                  </div>
+                </div>
               </div>
-            );
-          })}
+              
+              {/* Spacer to create scroll length for the NEXT card to slide up */}
+              {i < cards.length - 1 && (
+                <div 
+                  className="w-full shrink-0 snap-start" 
+                  style={{ 
+                    height: `${scrollBufferVh}vh`,
+                    scrollMarginTop: `${stickyTopPx + 180 + (i + 1) * stackOffsetPx}px`
+                  }} 
+                  aria-hidden 
+                />
+              )}
+            </Fragment>
+          ))}
         </div>
-
-        {/* ── Progress dots + counter ── */}
-        <div className="shrink-0 flex flex-col items-center gap-2 pb-5">
-          <div className="flex gap-2">
-            {cards.map((_, i) => (
-              <div
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-400 ${
-                  i === activeIndex ? "w-5 bg-brand" : "w-1.5 bg-white/20"
-                }`}
-              />
-            ))}
-          </div>
-          <p className="text-[10px] uppercase tracking-widest text-white/30">
-            {activeIndex + 1} / {cards.length}
-          </p>
-        </div>
+        
+        {/* Final buffer - reduced to keep it tight */}
+        <div style={{ height: "4vh" }} />
       </div>
     </div>
   );
