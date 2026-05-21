@@ -33,6 +33,18 @@ const PACKAGES: Pkg[] = [
     cta: "Scale My Content",
   },
   {
+    name: "Accelerator Production",
+    meta: "Maximum content Maximum growth 12 Reels 2 Shoot Days 6 Carousels",
+    bullets: [
+      { title: "2 monthly strategy calls" },
+      { title: "10 scripts written for you" },
+      { title: "Full shoot + editing handled" },
+      { title: "Social media fully managed" },
+    ],
+    variant: "white",
+    cta: "Accelerate My Content",
+  },
+  {
     name: "Starter Production",
     meta: "Consistent content Structured growth 8 Reels 1 Shoot Day 4 Carousels",
     bullets: [
@@ -43,31 +55,6 @@ const PACKAGES: Pkg[] = [
     ],
     variant: "white",
     cta: "Start My Content",
-  },
-  {
-    name: "Content Consulting",
-    meta: "Clarity before scale 12 Sessions 3 Months",
-    bullets: [
-      { title: "Weekly 1 on 1 strategy" },
-      { title: "Monthly content planning" },
-      { title: "Script guidance" },
-      { title: "Performance tracking" },
-    ],
-    variant: "dark",
-    cta: "Get Clarity",
-  },
-  {
-    name: "Accelerator Production",
-    meta: "Maximum content Maximum growth 12 Reels 2 Shoot Days 6 Carousels",
-    bullets: [
-      { title: "2 monthly strategy calls" },
-      { title: "10 scripts written for you" },
-      { title: "Full shoot + editing handled" },
-      { title: "Social media fully managed" },
-    ],
-    variant: "white",
-    span: "md:col-span-2",
-    cta: "Accelerate My Content",
   },
   {
     name: "Custom Growth Plan",
@@ -82,6 +69,19 @@ const PACKAGES: Pkg[] = [
     variant: "dark",
     span: "md:col-span-2",
     cta: "Build My Plan",
+  },
+  {
+    name: "Content Consulting",
+    meta: "Clarity before scale 12 Sessions 3 Months",
+    bullets: [
+      { title: "Weekly 1 on 1 strategy" },
+      { title: "Monthly content planning" },
+      { title: "Script guidance" },
+      { title: "Performance tracking" },
+    ],
+    variant: "dark",
+    span: "md:col-span-2",
+    cta: "Get Clarity",
   },
   {
     name: "Performance Marketing",

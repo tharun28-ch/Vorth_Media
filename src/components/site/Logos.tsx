@@ -70,35 +70,37 @@ export function Logos() {
           ))}
         </div>
 
-        {/* ── Desktop: Full list (lg+) ── */}
-        <div className="mt-14 hidden flex-wrap items-center justify-center gap-12 lg:flex md:gap-20">
-          {LOGOS.map((brand, i) => (
-            <motion.div
-              key={brand.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group flex flex-col items-center gap-4"
-            >
-              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-surface/60 overflow-hidden transition-all duration-300 group-hover:scale-110 group-hover:border-brand group-hover:shadow-[0_0_30px_rgba(255,45,55,0.2)]">
-                {brand.image ? (
-                  <img
-                    src={brand.image}
-                    alt={brand.name}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="text-3xl font-bold text-brand">
-                    {brand.name.charAt(0)}
-                  </span>
-                )}
+        {/* ── Desktop: auto-scrolling marquee (lg+) ── */}
+        <div className="mt-14 hidden overflow-hidden lg:block">
+          <div className="logos-marquee-desktop flex w-max">
+            {[0, 1].map((setIndex) => (
+              <div key={setIndex} className="flex gap-20 pr-20">
+                {LOGOS.map((brand, i) => (
+                  <div
+                    key={`${brand.name}-d-${setIndex}-${i}`}
+                    className="group flex shrink-0 flex-col items-center gap-4"
+                  >
+                    <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-surface/60 overflow-hidden transition-all duration-300 group-hover:scale-110 group-hover:border-brand group-hover:shadow-[0_0_30px_rgba(255,45,55,0.2)]">
+                      {brand.image ? (
+                        <img
+                          src={brand.image}
+                          alt={brand.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-3xl font-bold text-brand">
+                          {brand.name.charAt(0)}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs font-semibold tracking-widest text-white/60 transition-colors duration-300 group-hover:text-brand">
+                      {brand.name.toUpperCase()}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <span className="text-xs font-semibold tracking-widest text-white/60 transition-colors duration-300 group-hover:text-brand">
-                {brand.name.toUpperCase()}
-              </span>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -110,6 +112,9 @@ export function Logos() {
         }
         .logos-marquee {
           animation: marquee-ltr 25s linear infinite;
+        }
+        .logos-marquee-desktop {
+          animation: marquee-ltr 40s linear infinite;
         }
       `}</style>
     </section>

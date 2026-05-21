@@ -26,8 +26,8 @@ const teamMembers: TeamMember[] = [
     title: "Founder & CEO",
     bio: "Monish leads brand strategy and growth roadmaps for every Vorth client. He blends storytelling with sharp business thinking to align brand and revenue from day one.",
     img: "/team/member1.jpg",
-    linkedin: "https://www.linkedin.com/",
-    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/in/monish-aravind-k-a9299334a/",
+    instagram: "https://www.instagram.com/makkk.in/",
   },
   {
     id: "kumaran",
@@ -39,7 +39,7 @@ const teamMembers: TeamMember[] = [
     title: "Marketing Head",
     bio: "Kumaran owns performance marketing and full funnel scaling. He's obsessed with creative-led growth and treats every campaign like it's his own legacy.",
     img: "/team/member2.jpg",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/kumaran0418",
   },
   {
     id: "sanjai",
@@ -51,7 +51,7 @@ const teamMembers: TeamMember[] = [
     title: "Content Production Head",
     bio: "Sanjai runs end-to-end production and the creative supply chain. He turns ambitious ideas into shipped work with calm execution and zero drama.",
     img: "/team/member3.jpg",
-    linkedin: "https://www.linkedin.com/",
+    instagram: "https://www.instagram.com/sanjaiisuresh/",
   },
   {
     id: "shashank",
@@ -63,7 +63,7 @@ const teamMembers: TeamMember[] = [
     title: "Tech Head",
     bio: "Shashank architects the tech backbone behind every Vorth system from automation pipelines to digital infrastructure that keeps everything running at scale.",
     img: "/team/member4.jpg",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/shashank-p-044a7b288",
   },
   {
     id: "vaishnavi",
@@ -75,7 +75,7 @@ const teamMembers: TeamMember[] = [
     title: "Lead Editor",
     bio: "Vaishnavi brings every frame to life with precision editing and a sharp eye for pacing. She ensures every piece of content feels polished and scroll-stopping.",
     img: "/team/member5.jpg",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/vaishnavi-shivshankar-a88004261/",
   },
   {
     id: "tharun",
@@ -87,7 +87,7 @@ const teamMembers: TeamMember[] = [
     title: "Tech Product Designer",
     bio: "Tharun bridges the gap between high-end aesthetics and technical feasibility. He builds design systems and digital interfaces that feel as good as they look.",
     img: "/team/member7jpg.jpg",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/tharun-g-603b97401/",
   },
   {
     id: "hemanth",
@@ -99,7 +99,7 @@ const teamMembers: TeamMember[] = [
     title: "Lead Editor",
     bio: "Hemanth crafts cinematic edits that elevate raw footage into compelling narratives. His attention to rhythm and detail makes every deliverable hit different.",
     img: "/team/member6.jpg",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/hemanth-kumar-7384a2332",
   },
 ];
 
