@@ -28,20 +28,36 @@ export function MobileStickyCardStack({
   scrollBufferVh = 45, // Lowered to 45 to make swiping easier (1 normal swipe = 1 card)
 }: MobileStickyCardStackProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const sentinelRef = React.useRef<HTMLDivElement>(null);
 
+  React.useEffect(() => {
+    const el = containerRef.current;
+    const sentinel = sentinelRef.current;
+    if (!el || !sentinel) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === el) {
+          if (entry.isIntersecting) {
+            activeSnapSections++;
+          } else {
+            activeSnapSections = Math.max(0, activeSnapSections - 1);
+          }
+        } else if (entry.target === sentinel) {
+          // When sentinel is not intersecting, we're past the section
+          if (!entry.isIntersecting) {
+            activeSnapSections = 0;
+          }
         }
-
-        if (activeSnapSections > 0) {
-          // Mandatory ensures precise 1-card locking
-          document.documentElement.style.scrollSnapType = "y mandatory";
-        } else {
-          document.documentElement.style.scrollSnapType = "";
-        }
-      },
-
-    );
+        // Apply snap type based on active counters
+        document.documentElement.style.scrollSnapType =
+          activeSnapSections > 0 ? "y mandatory" : "";
+      });
+    }, { rootMargin: "-40% 0px -40% 0px" });
 
     observer.observe(el);
+    observer.observe(sentinel);
+
     return () => {
       observer.disconnect();
       activeSnapSections = Math.max(0, activeSnapSections - 1);
