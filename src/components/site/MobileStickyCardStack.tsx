@@ -16,6 +16,8 @@ type MobileStickyCardStackProps = {
   scrollBufferVh?: number;
 };
 
+let activeSnapSections = 0;
+
 export function MobileStickyCardStack({
   cards,
   title,
@@ -31,11 +33,20 @@ export function MobileStickyCardStack({
     const el = containerRef.current;
     if (!el) return;
 
-    // Dynamically apply scroll-snap ONLY when this section is in viewport
+    // Dynamically apply scroll-snap ONLY when at least one section is in viewport.
+    // We use a global counter because there are multiple card stacks on the page.
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          document.documentElement.style.scrollSnapType = "y mandatory";
+          activeSnapSections++;
+        } else {
+          activeSnapSections = Math.max(0, activeSnapSections - 1);
+        }
+
+        if (activeSnapSections > 0) {
+          // Use proximity so it perfectly aligns the cards but doesn't completely trap the user
+          // from scrolling down the rest of the normal page.
+          document.documentElement.style.scrollSnapType = "y proximity";
         } else {
           document.documentElement.style.scrollSnapType = "";
         }
@@ -46,7 +57,11 @@ export function MobileStickyCardStack({
     observer.observe(el);
     return () => {
       observer.disconnect();
-      document.documentElement.style.scrollSnapType = "";
+      // On unmount, decrement and update
+      activeSnapSections = Math.max(0, activeSnapSections - 1);
+      if (activeSnapSections === 0) {
+        document.documentElement.style.scrollSnapType = "";
+      }
     };
   }, []);
 
