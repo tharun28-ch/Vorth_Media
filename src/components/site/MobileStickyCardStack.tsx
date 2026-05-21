@@ -29,18 +29,6 @@ export function MobileStickyCardStack({
 }: MobileStickyCardStackProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    // We use a strict rootMargin so snapping is ONLY active when this section is in the absolute center of the screen.
-    // This perfectly prevents the section from trapping the scroll when entering or exiting!
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          activeSnapSections++;
-        } else {
-          activeSnapSections = Math.max(0, activeSnapSections - 1);
         }
 
         if (activeSnapSections > 0) {
@@ -50,7 +38,7 @@ export function MobileStickyCardStack({
           document.documentElement.style.scrollSnapType = "";
         }
       },
-      { rootMargin: "-40% 0px -40% 0px" }
+
     );
 
     observer.observe(el);
