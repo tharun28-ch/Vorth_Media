@@ -28,44 +28,57 @@ export function MobileStickyCardStack({
   scrollBufferVh = 45, // Lowered to 45 to make swiping easier (1 normal swipe = 1 card)
 }: MobileStickyCardStackProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const sentinelRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const el = containerRef.current;
-    const sentinel = sentinelRef.current;
-    if (!el || !sentinel) return;
+    if (!el) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === el) {
-          if (entry.isIntersecting) {
-            activeSnapSections++;
-          } else {
-            activeSnapSections = Math.max(0, activeSnapSections - 1);
-          }
-        } else if (entry.target === sentinel) {
-          // When sentinel is not intersecting, we're past the section
-          if (!entry.isIntersecting) {
-            activeSnapSections = 0;
-          }
+    let wasSnapping = false;
+    const cardCount = cards.length;
+
+    // Use scroll position to precisely detect when we're within the card zone.
+    // This cleanly disengages snap the moment we pass the last card.
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // How far we've scrolled into this container (positive = top has scrolled above viewport)
+      const scrolledInto = -rect.top;
+
+      // Total scroll travel to reach the last card's sticky position
+      const totalCardTravel = (cardCount - 1) * (vh * scrollBufferVh / 100);
+
+      // Snap is active only while we're between the section header and the last card
+      const shouldSnap =
+        scrolledInto > vh * 0.1 &&      // Past the section header
+        scrolledInto < totalCardTravel;  // Haven't passed the last card
+
+      if (shouldSnap && !wasSnapping) {
+        wasSnapping = true;
+        activeSnapSections++;
+        document.documentElement.style.scrollSnapType = "y mandatory";
+      } else if (!shouldSnap && wasSnapping) {
+        wasSnapping = false;
+        activeSnapSections = Math.max(0, activeSnapSections - 1);
+        if (activeSnapSections === 0) {
+          document.documentElement.style.scrollSnapType = "";
         }
-        // Apply snap type based on active counters
-        document.documentElement.style.scrollSnapType =
-          activeSnapSections > 0 ? "y mandatory" : "";
-      });
-    }, { rootMargin: "-40% 0px -40% 0px" });
-
-    observer.observe(el);
-    observer.observe(sentinel);
-
-    return () => {
-      observer.disconnect();
-      activeSnapSections = Math.max(0, activeSnapSections - 1);
-      if (activeSnapSections === 0) {
-        document.documentElement.style.scrollSnapType = "";
       }
     };
-  }, []);
+
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      if (wasSnapping) {
+        activeSnapSections = Math.max(0, activeSnapSections - 1);
+        if (activeSnapSections === 0) {
+          document.documentElement.style.scrollSnapType = "";
+        }
+      }
+    };
+  }, [cards.length, scrollBufferVh]);
 
   if (cards.length === 0) return null;
 
