@@ -25,7 +25,7 @@ export function MobileStickyCardStack({
   className,
   stickyTopPx = 70,
   stackOffsetPx = 8,
-  scrollBufferVh = 65,
+  scrollBufferVh = 45, // Lowered to 45 to make swiping easier (1 normal swipe = 1 card)
 }: MobileStickyCardStackProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -33,8 +33,8 @@ export function MobileStickyCardStack({
     const el = containerRef.current;
     if (!el) return;
 
-    // Dynamically apply scroll-snap ONLY when at least one section is in viewport.
-    // We use a global counter because there are multiple card stacks on the page.
+    // We use a strict rootMargin so snapping is ONLY active when this section is in the absolute center of the screen.
+    // This perfectly prevents the section from trapping the scroll when entering or exiting!
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -44,20 +44,18 @@ export function MobileStickyCardStack({
         }
 
         if (activeSnapSections > 0) {
-          // Use proximity so it perfectly aligns the cards but doesn't completely trap the user
-          // from scrolling down the rest of the normal page.
-          document.documentElement.style.scrollSnapType = "y proximity";
+          // Mandatory ensures precise 1-card locking
+          document.documentElement.style.scrollSnapType = "y mandatory";
         } else {
           document.documentElement.style.scrollSnapType = "";
         }
       },
-      { threshold: 0.0 }
+      { rootMargin: "-40% 0px -40% 0px" }
     );
 
     observer.observe(el);
     return () => {
       observer.disconnect();
-      // On unmount, decrement and update
       activeSnapSections = Math.max(0, activeSnapSections - 1);
       if (activeSnapSections === 0) {
         document.documentElement.style.scrollSnapType = "";
@@ -93,6 +91,7 @@ export function MobileStickyCardStack({
                   top: `${stickyTopPx + 180 + i * stackOffsetPx}px`,
                   zIndex: 10 + i * 10,
                   scrollMarginTop: `${stickyTopPx + 180 + i * stackOffsetPx}px`,
+                  scrollSnapStop: "always", // Forces browser to stop at this card even on a hard swipe
                 }}
               >
                 <div className="overflow-hidden min-h-[420px] flex flex-col rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.9)]">
