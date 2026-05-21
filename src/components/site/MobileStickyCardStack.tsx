@@ -1,4 +1,4 @@
-import { Fragment, type CSSProperties, type ReactNode } from "react";
+import React, { Fragment, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type MobileStickyCardStackProps = {
@@ -23,15 +23,40 @@ export function MobileStickyCardStack({
   className,
   stickyTopPx = 70,
   stackOffsetPx = 8,
-  scrollBufferVh = 100,
+  scrollBufferVh = 65,
 }: MobileStickyCardStackProps) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Dynamically apply scroll-snap ONLY when this section is in viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          document.documentElement.style.scrollSnapType = "y mandatory";
+        } else {
+          document.documentElement.style.scrollSnapType = "";
+        }
+      },
+      { threshold: 0.0 }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.scrollSnapType = "";
+    };
+  }, []);
+
   if (cards.length === 0) return null;
 
   // Calculate total height: each card adds a significant scrollable distance.
   const totalScrollHeight = `${(cards.length - 1) * scrollBufferVh + 100}vh`;
 
   return (
-    <div className={cn("md:hidden", className)}>
+    <div className={cn("md:hidden", className)} ref={containerRef}>
       <div className="relative w-full" style={{ minHeight: totalScrollHeight }}>
         {/* Sticky Header Section - Now stays at the top, below the site header */}
         <div 
@@ -45,7 +70,7 @@ export function MobileStickyCardStack({
         <div className="relative">
           {cards.map((node, i) => (
             <Fragment key={i}>
-              {/* The sticky card - Acts as a snap point */}
+              {/* The sticky card - Acts as the only snap point */}
               <div
                 className="sticky w-full px-5 snap-start"
                 style={{
@@ -65,11 +90,8 @@ export function MobileStickyCardStack({
               {/* Spacer to create scroll length for the NEXT card to slide up */}
               {i < cards.length - 1 && (
                 <div 
-                  className="w-full shrink-0 snap-start" 
-                  style={{ 
-                    height: `${scrollBufferVh}vh`,
-                    scrollMarginTop: `${stickyTopPx + 180 + (i + 1) * stackOffsetPx}px`
-                  }} 
+                  className="w-full shrink-0" 
+                  style={{ height: `${scrollBufferVh}vh` }} 
                   aria-hidden 
                 />
               )}
